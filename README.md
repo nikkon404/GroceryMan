@@ -4,3 +4,4 @@
 
 * Aayush Subedi
 * Jianxuan Li
+* Smit Mehta
