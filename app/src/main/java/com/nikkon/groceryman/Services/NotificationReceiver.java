@@ -8,7 +8,7 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
-
+//src https://riptutorial.com/android/example/11495/scheduling-notifications
 public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

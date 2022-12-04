@@ -58,6 +58,7 @@ public class NotificationService {
 //        //10 is for how many seconds from now you want to schedule also you can create a custom instance of Callender to set on exact time
 //        calendar.add(Calendar.SECOND, 5);
 //        NotificationService.getInstance(getApplicationContext()).scheduleNotification(calendar.getTimeInMillis(), "Milk");
+//src:      https://riptutorial.com/android/example/11495/scheduling-notifications
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void scheduleNotification(Long time, String groceryName) {
         Intent intent = new Intent(context, NotificationReceiver.class);
