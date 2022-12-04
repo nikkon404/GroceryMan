@@ -13,6 +13,9 @@ import com.nikkon.groceryman.Fragments.ChartFragment;
 import com.nikkon.groceryman.Fragments.HomeFragment;
 import com.nikkon.groceryman.Fragments.ScannerFragment;
 import com.nikkon.groceryman.R;
+import com.nikkon.groceryman.Services.NotificationService;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         if (fragment != null) {
             loadFragment(fragment);
         }
-        return true;
+       return true;
     }
 
     @Override
