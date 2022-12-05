@@ -8,7 +8,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "grocery.db";
     private static final int DB_VERSION = 1;
 
-    static final String[] TABLES = {"Grocery"};
+    static final String[] TABLES = {"Grocery", "Todo"};
     static final String[] COLS_GROCERY = {
             "id INTEGER PRIMARY KEY AUTOINCREMENT",
             "ean TEXT NOT NULL",
@@ -21,6 +21,12 @@ public class DBHelper extends SQLiteOpenHelper {
             "images TEXT",
             "elid TEXT",
             "createdAt TEXT"};
+
+    static final String[] COLS_TODO = {
+            "id INTEGER PRIMARY KEY AUTOINCREMENT",
+            "title TEXT NOT NULL",
+            "createdAt TEXT"
+    };
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -54,7 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        createTables(sqLiteDatabase, TABLES, new String[][]{COLS_GROCERY});
+        createTables(sqLiteDatabase, TABLES, new String[][]{COLS_GROCERY , COLS_TODO});
     }
 
     @Override
