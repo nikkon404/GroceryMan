@@ -3,6 +3,7 @@ package com.nikkon.groceryman.Models;
 import com.fasterxml.jackson.annotation.*;
 
 public class Item {
+    private int id;
     private String ean;
     private String title;
     private String description;
@@ -12,6 +13,12 @@ public class Item {
     private String category;
     private String[] images;
     private String elid;
+    private String createdAt;
+
+    @JsonProperty("id")
+    public int getID() { return id; }
+    @JsonProperty("id")
+    public void setID(int value) { this.id = value; }
 
     @JsonProperty("ean")
     public String getEan() { return ean; }
@@ -57,4 +64,9 @@ public class Item {
     public String getElid() { return elid; }
     @JsonProperty("elid")
     public void setElid(String value) { this.elid = value; }
+
+    @JsonProperty("createdAt")
+    public String getCreatedAt() { return createdAt; }
+    @JsonProperty("createdAt")
+    public void setCreatedAt(String value) { this.createdAt = value; }
 }
