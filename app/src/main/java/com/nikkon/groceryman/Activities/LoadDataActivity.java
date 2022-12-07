@@ -3,6 +3,7 @@ package com.nikkon.groceryman.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,15 +17,19 @@ import android.widget.Toast;
 //import com.android.volley.toolbox.JsonObjectRequest;
 //import com.android.volley.toolbox.StringRequest;
 //import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nikkon.groceryman.Models.GroceryResponse;
+import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Utils.Converter;
+import com.nikkon.groceryman.Utils.Dialog;
 import com.nikkon.groceryman.Utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -44,7 +49,7 @@ public class LoadDataActivity extends AppCompatActivity {
         //set the data to the text view
        ( (TextView)findViewById(R.id.testText)).setText(data);
 
-        new UpdateTask().execute(data);
+        new UpdateTask(getApplicationContext()).execute(data);
 
     }
 
@@ -108,7 +113,14 @@ public class LoadDataActivity extends AppCompatActivity {
 }
 
  class UpdateTask extends AsyncTask<String, String,String> {
-    protected String doInBackground(String... urls) {
+
+    private Context context;
+     public UpdateTask(Context applicationContext) {
+            this.context=applicationContext;
+
+     }
+
+     protected String doInBackground(String... urls) {
 
         Log.d("TAG", "doInBackground:     "+ urls);
         String url = urls[0];
@@ -138,16 +150,24 @@ public class LoadDataActivity extends AppCompatActivity {
              public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                  ResponseBody body = response.body();
                  try {
-
-                    if (body != null) {
-                        Log.d("TAG", "onResponse: " + body.string());
-                             GroceryResponse data = Converter.fromJsonString(body.toString());
-                                Log.d("TAG", "onResponse: " + data);
-
-                    }
+                     if (body != null) {
+                         String bodyString = body.string();
+                         HashMap mapping = new ObjectMapper().readValue(bodyString, HashMap.class);
+                            GroceryResponse groceryResponse = new GroceryResponse(mapping);
+                            if(groceryResponse.getCode()=="200"){
+                                //goto form page
+                                Item item = groceryResponse.getItems()[0];
+                            }
+                            else{
+                                Dialog.show(context,"Error",groceryResponse.getCode()+ ": Failed to load data");
+                            }
+                     }
                  }
-                    catch (Exception e) {
+                    catch (IOException e) {
                         e.printStackTrace();
+                        String messgae = e.getMessage();
+                        Log.e("TAG", "onResponse:  "+messgae );
+                        Dialog.show(context, "Error", messgae);
                  }
 
              }

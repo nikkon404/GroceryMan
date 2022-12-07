@@ -1,10 +1,6 @@
 package com.nikkon.groceryman.Models;
-
-
-//     GroceryResponse data = Converter.fromJsonString(jsonString);
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class GroceryResponse {
@@ -13,27 +9,35 @@ public class GroceryResponse {
     private long offset;
     private Item[] items;
 
-    @JsonProperty("code")
     public String getCode() { return code; }
-    @JsonProperty("code")
     public void setCode(String value) { this.code = value; }
 
-    @JsonProperty("total")
     public long getTotal() { return total; }
-    @JsonProperty("total")
     public void setTotal(long value) { this.total = value; }
 
-    @JsonProperty("offset")
     public long getOffset() { return offset; }
-    @JsonProperty("offset")
     public void setOffset(long value) { this.offset = value; }
 
-    @JsonProperty("items")
     public Item[] getItems() { return items; }
-    @JsonProperty("items")
     public void setItems(Item[] value) { this.items = value; }
-}
 
+    //GroceryResponse from hashmap
+    public GroceryResponse(HashMap<String, Object> map) {
+        this.code = (String) map.get("code");
+        this.total = (int) map.get("total");
+        this.offset = (int) map.get("offset");
+
+        //loop through the itemsArray array and create an item object for each item
+        ArrayList itemsArray = (ArrayList) map.get("items");
+        //List of Items
+           Item[] items = new Item[itemsArray.size()];
+        for (int i = 0; i < items.length; i++) {
+            items[i] = new Item((HashMap<String, Object>) itemsArray.get(i));
+        }
+        this.items = items;
+
+    }
+}
 // Item.java
 
 
