@@ -75,10 +75,7 @@ public class ItemModel {
         values.put("category", item.getCategory());
 
         // convert images array to string
-        String images = "";
-        for (String image : item.getImages()) {
-            images += image + ",";
-        }
+        String images = item.getBase64Image();
         values.put("images", images);
         values.put("elid", item.getElid());
 

@@ -53,6 +53,12 @@ public class Item {
     public Item() {
     }
 
+    public String getBase64Image(){
+       String data;
+       //TODO: convert images to base64
+       return data;
+    }
+
     //Item from hashmaps
     public Item(HashMap<String, Object> item) {
 //        this.id = (int) item.get("id");
