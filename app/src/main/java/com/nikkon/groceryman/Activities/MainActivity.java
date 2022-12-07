@@ -12,6 +12,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.nikkon.groceryman.Fragments.ChartFragment;
 import com.nikkon.groceryman.Fragments.HomeFragment;
 import com.nikkon.groceryman.Fragments.ScannerFragment;
+import com.nikkon.groceryman.Fragments.ShoppingListFragment;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Services.NotificationService;
 
@@ -28,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnItemSelectedListener(this);
         loadFragment(new HomeFragment());
-
     }
 
     void loadFragment(Fragment fragment) {
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 fragment = new ChartFragment();
                 break;
             case R.id.nav_shopping_list:
+                fragment = new ShoppingListFragment();
                 break;
             case R.id.nav_qr_scan:
                 fragment = new ScannerFragment();
