@@ -48,7 +48,8 @@ public class ScannerFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_scanner, container, false);
         checkCameraPermission();
         surfaceView = view.findViewById(R.id.surfaceView);
-        initialiseDetectorsAndSources();
+//        initialiseDetectorsAndSources();
+        openDataLoader("041383090219");
         return view;
     }
 
@@ -130,10 +131,7 @@ public class ScannerFragment extends Fragment {
 //                       MainActivity mainActivity = (MainActivity) getActivity();
 //                       mainActivity.setScannerData(receivedData);
 
-                       Intent intent = new Intent(getActivity(), LoadDataActivity.class);
-                       intent.putExtra("data", receivedData);
-                       startActivity(intent);
-                       cameraSource.release();
+                     openDataLoader(receivedData);
                        //pause fragment
 //                       onPause();
 //                       cameraSource.stop();
@@ -144,6 +142,17 @@ public class ScannerFragment extends Fragment {
                 }
             }
         });
+    }
+
+    void openDataLoader(String data){
+        Intent intent = new Intent(getActivity(), LoadDataActivity.class);
+        intent.putExtra("data", data);
+        startActivity(intent);
+        if(cameraSource!=null){
+            cameraSource.release();
+//            cameraSource.stop();
+        }
+
     }
 
 }
