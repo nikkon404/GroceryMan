@@ -112,7 +112,8 @@ public class ItemModel {
 
         // convert images string to array
         String[] images = cursor.getString(cursor.getColumnIndex("images")).split(",");
-        item.setImages(images);
+        //convert images array to Arraylist<String>
+//        item.setImages(images);
         item.setElid(cursor.getString(cursor.getColumnIndex("elid")));
         item.setCreatedAt(cursor.getString(cursor.getColumnIndex("createdAt")));
 
