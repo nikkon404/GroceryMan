@@ -54,7 +54,7 @@ public class Item {
     }
 
     public String getBase64Image(){
-       String data;
+       String data="";
        //TODO: convert images to base64
        return data;
     }
