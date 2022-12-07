@@ -5,3 +5,4 @@
 * Aayush Subedi
 * Jianxuan Li
 * Smit Mehta
+* Krupa Suhagiya
