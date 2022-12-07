@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +53,7 @@ public class LoadDataActivity extends AppCompatActivity {
         //set the data to the text view
        ( (TextView)findViewById(R.id.testText)).setText(data);
         new UpdateTask(LoadDataActivity.this).execute(data);
+
     }
 
 }
@@ -100,6 +102,19 @@ public class LoadDataActivity extends AppCompatActivity {
              @Override
              public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                  ResponseBody body = response.body();
+                 int code= response.code();
+                 if(code != 200){
+                     activity.runOnUiThread(() -> {
+                         try {
+                             Dialog.show(activity, "Error", response.body().string());
+                         } catch (IOException e) {
+                             e.printStackTrace();
+                         }
+                     });
+
+                     return;
+
+                 }
                  try {
                      if (body != null) {
                          String bodyString = body.string();
@@ -108,6 +123,15 @@ public class LoadDataActivity extends AppCompatActivity {
                             if(groceryResponse.getCode().equals("OK") &&  groceryResponse.getItems().length>0){
                                 //goto form page
                                 Item item = groceryResponse.getItems()[0];
+                                //goto form [age
+
+                                activity.runOnUiThread(() ->{
+                                    Intent intent  =  new Intent(activity,FormActivity.class);
+                                    intent.putExtra("item", item);
+                                     activity.startActivity(intent);
+
+                                });
+
                             }
                             else{
                                 activity.runOnUiThread(() -> Dialog.show(activity,"Error",groceryResponse.getCode()+ ": Failed to load data"));

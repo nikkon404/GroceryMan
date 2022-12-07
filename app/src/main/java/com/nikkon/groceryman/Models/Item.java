@@ -1,9 +1,10 @@
 package com.nikkon.groceryman.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Item {
+public class Item implements Serializable {
     private int id;
     private String ean;
     private String title;

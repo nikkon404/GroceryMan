@@ -71,16 +71,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
-        <androidx.cardview.widget.CardView
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:layout_marginBottom="20dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:layout_marginBottom="20dp" />
+
             <ImageView
                 android:id="@+id/imageview"
                 android:layout_width="250dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_height="250dp"/>
+                android:layout_height="250dp"
+                android:layout_centerInParent="true" />
         </RelativeLayout>
 
 
@@ -106,20 +107,20 @@
             android:orientation="horizontal"
             android:layout_marginTop="10dp">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
                 android:id="@+id/expDate"
                 android:layout_width="140dp"
                 android:layout_height="30dp"
-                app:placeholderText="@string/Exp_date"
+                android:text="@string/select_exp_date"
                 android:background="@drawable/edittext_background"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="10dp"/>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
                 android:id="@+id/remDate"
                 android:layout_width="140dp"
                 android:layout_height="30dp"
-                app:placeholderText="@string/Rem_date"
+                android:text="@string/select_rem_date"
                 android:background="@drawable/edittext_background"
                 android:layout_marginBottom="10dp"/>
 

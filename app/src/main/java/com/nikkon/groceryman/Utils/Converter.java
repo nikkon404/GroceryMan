@@ -1,5 +1,7 @@
 package com.nikkon.groceryman.Utils;
 
+import android.graphics.drawable.Drawable;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -12,6 +14,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.nikkon.groceryman.Models.GroceryResponse;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
@@ -87,5 +91,16 @@ public class Converter {
     private static ObjectWriter getObjectWriter() {
         if (writer == null) instantiateMapper();
         return writer;
+    }
+
+    //reference :https://stackoverflow.com/questions/6407324/how-to-display-image-from-url-on-android
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
