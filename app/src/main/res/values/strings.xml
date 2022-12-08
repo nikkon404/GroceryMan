@@ -15,6 +15,8 @@
     <string name="date">Set the Date</string>
     <string name="image">🖼️ Pick Image</string>
     <string name="save">Save</string>
+    <string name="category">Category</string>
+    <string name="clear">Clear</string>
 
 
     <string-array name="array_category">

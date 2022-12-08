@@ -86,4 +86,11 @@ public class Item implements Serializable {
     public void setExpdate(Date expdate) {
         this.expdate = expdate;
     }
+
+    //get days before expiration
+    public int getDaysBeforeExpiration(){
+        Date today = new Date();
+        long diff = expdate.getTime() - today.getTime();
+        return (int) (diff / (1000 * 60 * 60 * 24));
+    }
 }

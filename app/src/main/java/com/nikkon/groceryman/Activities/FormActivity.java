@@ -17,15 +17,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.nikkon.groceryman.Fragments.HomeFragment;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Services.NotificationService;
+import com.nikkon.groceryman.Utils.AppSnackbar;
 import com.nikkon.groceryman.Utils.Converter;
 import com.nikkon.groceryman.Utils.Dialog;
 
@@ -50,6 +53,7 @@ public class FormActivity extends AppCompatActivity {
     Calendar remindertime;
 
     Item fetchedItem;
+    View view;
 
 
     @Override
@@ -62,7 +66,9 @@ public class FormActivity extends AppCompatActivity {
 
     }
 
+
     void initUI() {
+        view = findViewById(android.R.id.content);
         title = findViewById(R.id.txtTitle);
         description = findViewById(R.id.txtDescription);
         brand = findViewById(R.id.txtBrand);
@@ -111,8 +117,9 @@ public class FormActivity extends AppCompatActivity {
                     NotificationService.getInstance(this)
                             .scheduleNotification(remindertime.getTimeInMillis(), fetchedItem.getTitle());
 
-                    Dialog.show(this, "Success", "Item added successfully");
-
+                    Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
+                   this.setResult(RESULT_OK);
+                   this.finish();
                 }
                 else{
                     Dialog.show(this, "Error", "Something went wrong");

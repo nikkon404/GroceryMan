@@ -1,9 +1,11 @@
 package com.nikkon.groceryman.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -20,6 +22,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
+
+
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         loadFragment(new HomeFragment());
     }
 
-    void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         //to attach fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout, fragment).commit();
     }
@@ -62,5 +66,16 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==444)
+        {
+            loadFragment(HomeFragment.getInstance());
+            //do the things u wanted
+        }
     }
 }

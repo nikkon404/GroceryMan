@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -50,8 +51,8 @@ public class ScannerFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_scanner, container, false);
         checkCameraPermission();
         surfaceView = view.findViewById(R.id.surfaceView);
-        initialiseDetectorsAndSources();
-//        openDataLoader("041383090219");
+        //initialiseDetectorsAndSources();
+        openDataLoader("041383090219");
         return view;
     }
 
@@ -145,7 +146,13 @@ public class ScannerFragment extends Fragment {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    cameraSource.release();
+                    if (cameraSource != null) {
+                        cameraSource.release();
+
+//                        cameraSource.stop();
+                    }
+                    startActivity(intent);
+
                 }
             });
 
@@ -155,10 +162,18 @@ public class ScannerFragment extends Fragment {
             e.printStackTrace();
         }
 
-        startActivity(intent);
 
 
 
+    }
+
+    //on activity result
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+
+        }
     }
 
 }
