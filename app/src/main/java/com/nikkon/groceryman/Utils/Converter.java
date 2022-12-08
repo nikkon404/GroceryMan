@@ -1,6 +1,11 @@
 package com.nikkon.groceryman.Utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.StrictMode;
+import android.util.Base64;
+import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +18,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.nikkon.groceryman.Models.GroceryResponse;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -25,82 +31,20 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
 public class Converter {
-    // Date-time helpers
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = new DateTimeFormatterBuilder()
-            .appendOptional(DateTimeFormatter.ISO_DATE_TIME)
-            .appendOptional(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-            .appendOptional(DateTimeFormatter.ISO_INSTANT)
-            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SX"))
-            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ssX"))
-            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-            .toFormatter()
-            .withZone(ZoneOffset.UTC);
 
-    public static OffsetDateTime parseDateTimeString(String str) {
-        return ZonedDateTime.from(Converter.DATE_TIME_FORMATTER.parse(str)).toOffsetDateTime();
+    //bitmap image into base64
+    public static String encodeImage(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+        return encImage;
     }
 
-    private static final DateTimeFormatter TIME_FORMATTER = new DateTimeFormatterBuilder()
-            .appendOptional(DateTimeFormatter.ISO_TIME)
-            .appendOptional(DateTimeFormatter.ISO_OFFSET_TIME)
-            .parseDefaulting(ChronoField.YEAR, 2020)
-            .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
-            .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
-            .toFormatter()
-            .withZone(ZoneOffset.UTC);
-
-    public static OffsetTime parseTimeString(String str) {
-        return ZonedDateTime.from(Converter.TIME_FORMATTER.parse(str)).toOffsetDateTime().toOffsetTime();
-    }
-    // Serialize/deserialize helpers
-
-    public static GroceryResponse fromJsonString(String json) throws IOException {
-        return getObjectReader().readValue(json);
-    }
-
-    public static String toJsonString(GroceryResponse obj) throws JsonProcessingException {
-        return getObjectWriter().writeValueAsString(obj);
-    }
-
-    private static ObjectReader reader;
-    private static ObjectWriter writer;
-
-    private static void instantiateMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.findAndRegisterModules();
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(OffsetDateTime.class, new JsonDeserializer<OffsetDateTime>() {
-            @Override
-            public OffsetDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-                String value = jsonParser.getText();
-                return Converter.parseDateTimeString(value);
-            }
-        });
-        mapper.registerModule(module);
-        reader = mapper.readerFor(GroceryResponse.class);
-        writer = mapper.writerFor(GroceryResponse.class);
-    }
-
-    private static ObjectReader getObjectReader() {
-        if (reader == null) instantiateMapper();
-        return reader;
-    }
-
-    private static ObjectWriter getObjectWriter() {
-        if (writer == null) instantiateMapper();
-        return writer;
-    }
-
-    //reference :https://stackoverflow.com/questions/6407324/how-to-display-image-from-url-on-android
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
+    //base64 into image
+    public static Bitmap decodeImage(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 }

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.nav_home:
-                fragment = new HomeFragment();
+                fragment =  HomeFragment.getInstance();
                 break;
             case R.id.nav_chart:
                 fragment = new ChartFragment();

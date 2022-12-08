@@ -9,6 +9,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -48,8 +50,8 @@ public class ScannerFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_scanner, container, false);
         checkCameraPermission();
         surfaceView = view.findViewById(R.id.surfaceView);
-//        initialiseDetectorsAndSources();
-        openDataLoader("041383090219");
+        initialiseDetectorsAndSources();
+//        openDataLoader("041383090219");
         return view;
     }
 
@@ -126,16 +128,7 @@ public class ScannerFragment extends Fragment {
                        Toast.makeText(view.getContext(), "No data received", Toast.LENGTH_SHORT).show();
                    }
                    else{
-                       //stop scanner
-//                       Toast.makeText(view.getContext(), "Data received", Toast.LENGTH_SHORT).show();
-//                       MainActivity mainActivity = (MainActivity) getActivity();
-//                       mainActivity.setScannerData(receivedData);
-
                      openDataLoader(receivedData);
-                       //pause fragment
-//                       onPause();
-//                       cameraSource.stop();
-
 
                    }
 
@@ -147,11 +140,24 @@ public class ScannerFragment extends Fragment {
     void openDataLoader(String data){
         Intent intent = new Intent(getActivity(), LoadDataActivity.class);
         intent.putExtra("data", data);
-        startActivity(intent);
-        if(cameraSource!=null){
-            cameraSource.release();
-//            cameraSource.stop();
+        try {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    cameraSource.release();
+                }
+            });
+
+
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        startActivity(intent);
+
+
 
     }
 

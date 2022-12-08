@@ -2,6 +2,7 @@ package com.nikkon.groceryman.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Item implements Serializable {
@@ -15,7 +16,9 @@ public class Item implements Serializable {
     private String category;
     private ArrayList<String> images;
     private String elid;
-    private String createdAt;
+    private Date createdAt;
+    private Date expdate;
+    private String base64;
 
     public int getID() { return id; }
     public void setID(int value) { this.id = value; }
@@ -47,17 +50,19 @@ public class Item implements Serializable {
     public String getElid() { return elid; }
     public void setElid(String value) { this.elid = value; }
 
-    public String getCreatedAt() { return createdAt; }
+    public Date getCreatedAt() { return createdAt; }
 
-    public void setCreatedAt(String value) { this.createdAt = value; }
+    public void setCreatedAt(Date value) { this.createdAt = value; }
     //empty constructor
     public Item() {
     }
 
     public String getBase64Image(){
-       String data="";
-       //TODO: convert images to base64
-       return data;
+       return base64;
+    }
+
+    public void setBase64Image(String base64){
+        this.base64 = base64;
     }
 
     //Item from hashmaps
@@ -72,6 +77,13 @@ public class Item implements Serializable {
         this.category = (String) item.get("category");
         this.images = (ArrayList<String>) item.get("images");
         this.elid = (String) item.get("elid");
-        this.createdAt = (String) item.get("createdAt");
+    }
+
+    public Date getExpdate() {
+        return expdate;
+    }
+
+    public void setExpdate(Date expdate) {
+        this.expdate = expdate;
     }
 }

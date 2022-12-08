@@ -60,14 +60,14 @@ public class NotificationService {
 //        NotificationService.getInstance(getApplicationContext()).scheduleNotification(calendar.getTimeInMillis(), "Milk");
 //src:      https://riptutorial.com/android/example/11495/scheduling-notifications
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void scheduleNotification(Long time, String groceryName) {
+    public void scheduleNotification(Long timeMilliSec, String groceryName) {
         Intent intent = new Intent(context, NotificationReceiver.class);
         intent.putExtra("title", groceryName);
         intent.putExtra("desc", "Grocery is about to expire!!");
         PendingIntent pending = PendingIntent.getBroadcast(context, NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         // create alarm manager
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pending);
+        manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMilliSec, pending);
         Toast.makeText(context, "Scheduled ", Toast.LENGTH_LONG).show();
     }
 

@@ -60,30 +60,34 @@ public class LoadDataActivity extends AppCompatActivity {
 
  class UpdateTask extends AsyncTask<String, String,String> {
 
+    private Item item;
+
     private Activity activity;
      public UpdateTask(Activity activity) {
             this.activity=activity;
-
      }
 
-
-     //on post execute
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-
+     @Override
+     protected void onPostExecute(String s) {
+         super.onPostExecute(s);
+         if(item!=null){
+             Intent intent = new Intent(activity, FormActivity.class);
+             intent.putExtra("item",item);
+             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             activity.startActivity(intent);
+             activity.finish();
+         }
+     }
 
      protected String doInBackground(String... urls) {
 
         Log.d("TAG", "doInBackground:     "+ urls);
         String url = urls[0];
-
-        loadData2(url);
-
+        loadData(url);
         return "";
     }
-     void loadData2(String barCode) {
+     void loadData(String barCode) {
          //get request okhttp
          OkHttpClient client = new OkHttpClient();
 
@@ -122,15 +126,8 @@ public class LoadDataActivity extends AppCompatActivity {
                             GroceryResponse groceryResponse = new GroceryResponse(mapping);
                             if(groceryResponse.getCode().equals("OK") &&  groceryResponse.getItems().length>0){
                                 //goto form page
-                                Item item = groceryResponse.getItems()[0];
-                                //goto form [age
-
-                                activity.runOnUiThread(() ->{
-                                    Intent intent  =  new Intent(activity,FormActivity.class);
-                                    intent.putExtra("item", item);
-                                     activity.startActivity(intent);
-
-                                });
+                                 item = groceryResponse.getItems()[0];
+                               onPostExecute("");
 
                             }
                             else{

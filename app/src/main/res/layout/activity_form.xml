@@ -67,32 +67,22 @@
             android:background="@drawable/edittext_background"
             android:layout_marginBottom="50dp"/>
 
-        <RelativeLayout
+       <ImageView
+           android:id="@+id/imageview"
+           android:layout_gravity="center"
+           android:layout_width="250sp"
+           android:layout_height="250sp">
+
+       </ImageView>
+
+
+        <TextView
+            android:id="@+id/pickImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="280dp"
-                android:layout_height="280dp"
-                android:layout_marginBottom="20dp" />
-
-            <ImageView
-                android:id="@+id/imageview"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pickimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/text_style"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            app:placeholderText="@string/image"/>
+            android:text="@string/image"/>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -110,7 +100,7 @@
             <TextView
                 android:id="@+id/expDate"
                 android:layout_width="140dp"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:text="@string/select_exp_date"
                 android:background="@drawable/edittext_background"
                 android:layout_marginRight="50dp"
@@ -118,14 +108,26 @@
 
             <TextView
                 android:id="@+id/remDate"
-                android:layout_width="140dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/select_rem_date"
                 android:background="@drawable/edittext_background"
                 android:layout_marginBottom="10dp"/>
 
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"/>
+
     </LinearLayout>
 
 </ScrollView>

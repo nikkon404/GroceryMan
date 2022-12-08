@@ -20,7 +20,8 @@ public class DBHelper extends SQLiteOpenHelper {
             "category TEXT",
             "images TEXT",
             "elid TEXT",
-            "createdAt TEXT"};
+            "expdate INTEGER",
+            "createdAt INTEGER"};
 
     static final String[] COLS_TODO = {
             "id INTEGER PRIMARY KEY AUTOINCREMENT",
