@@ -17,6 +17,7 @@
     <string name="save">Save</string>
     <string name="category">Category</string>
     <string name="clear">Clear</string>
+    <string name="added_in">Added In</string>
 
 
     <string-array name="array_category">

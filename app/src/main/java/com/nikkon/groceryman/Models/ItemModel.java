@@ -134,7 +134,7 @@ public class ItemModel {
     public Item[] findAllItems() {
         DBHelper dbhelper = new DBHelper(this.context);
         SQLiteDatabase db = dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Grocery", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Grocery ORDER by expdate ASC", null);
         Item[] items = new Item[cursor.getCount()];
         int i = 0;
         while (cursor.moveToNext()) {
@@ -142,7 +142,7 @@ public class ItemModel {
             i++;
         }
         cursor.close();
-        db.close();
+       // db.close();
 
         return items;
     }

@@ -4,15 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 //
 //import com.android.volley.Request;
 //import com.android.volley.RequestQueue;
@@ -25,12 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nikkon.groceryman.Models.GroceryResponse;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
-import com.nikkon.groceryman.Utils.Converter;
 import com.nikkon.groceryman.Utils.Dialog;
-import com.nikkon.groceryman.Utils.Utils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.nikkon.groceryman.Utils.AppConst;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -89,7 +81,7 @@ public class LoadDataActivity extends AppCompatActivity {
          //get request okhttp
          OkHttpClient client = new OkHttpClient();
 
-         String url = Utils.API_URL + barCode;
+         String url = AppConst.API_URL + barCode;
          Request request = new Request.Builder()
                  .url(url)
                  .build();

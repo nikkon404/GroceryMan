@@ -15,8 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.nikkon.groceryman.Adaptors.ItemRecyclerViewAdapter;
@@ -83,6 +87,38 @@ public class HomeFragment extends Fragment {
                 return true;
             }
             return false;
+        });
+
+        Spinner spinner = view.findViewById(R.id.spnCatHome);
+        //set adapter for spinner
+        //collection of category list
+        String[] categories = getContext().getResources().getStringArray(R.array.array_category);
+        //add all to the beginning of the list
+        String[] allCategories = new String[categories.length + 1];
+        allCategories[0] = "All";
+        System.arraycopy(categories, 0, allCategories, 1, categories.length);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, allCategories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        //display category list on spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String Cat = spinner.getSelectedItem().toString();
+                if (Cat.equals("All")) {
+                    loadAllItems();
+                } else {
+                    setupData(itemModel.findItemsByCategory(Cat));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
         });
     }
 

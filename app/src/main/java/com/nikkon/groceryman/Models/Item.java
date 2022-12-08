@@ -20,6 +20,21 @@ public class Item implements Serializable {
     private Date expdate;
     private String base64;
 
+
+
+    //Item from hashmaps
+    public Item(HashMap<String, Object> item) {
+        this.ean = (String) item.get("ean");
+        this.title = (String) item.get("title");
+        this.description = (String) item.get("description");
+        this.upc = (String) item.get("upc");
+        this.brand = (String) item.get("brand");
+        this.model = (String) item.get("model");
+        this.category = (String) item.get("category");
+        this.images = (ArrayList<String>) item.get("images");
+        this.elid = (String) item.get("elid");
+    }
+
     public int getID() { return id; }
     public void setID(int value) { this.id = value; }
 
@@ -65,19 +80,6 @@ public class Item implements Serializable {
         this.base64 = base64;
     }
 
-    //Item from hashmaps
-    public Item(HashMap<String, Object> item) {
-//        this.id = (int) item.get("id");
-        this.ean = (String) item.get("ean");
-        this.title = (String) item.get("title");
-        this.description = (String) item.get("description");
-        this.upc = (String) item.get("upc");
-        this.brand = (String) item.get("brand");
-        this.model = (String) item.get("model");
-        this.category = (String) item.get("category");
-        this.images = (ArrayList<String>) item.get("images");
-        this.elid = (String) item.get("elid");
-    }
 
     public Date getExpdate() {
         return expdate;
