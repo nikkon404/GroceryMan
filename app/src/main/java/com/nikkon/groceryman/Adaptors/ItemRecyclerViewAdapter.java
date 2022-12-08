@@ -1,14 +1,17 @@
 package com.nikkon.groceryman.Adaptors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nikkon.groceryman.Activities.ItemDetailActivity;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Utils.Converter;
@@ -36,8 +39,24 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Item item = itemsArray[position];
-        holder.myTextView.setText(item.getTitle());
+        holder.tvTitle.setText(item.getTitle());
         holder.myImageView.setImageBitmap(Converter.decodeImage(item.getBase64Image()));
+        //int to string
+        String expdate = String.valueOf(item.getDaysBeforeExpiration());
+        holder.tvDays.setText(expdate);
+
+        //on click listener
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open details activity
+                Intent intent = new Intent(v.getContext(), ItemDetailActivity.class);
+                intent.putExtra("item", item);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+
     }
 
     // total number of rows
@@ -49,20 +68,23 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        TextView tvTitle;
+        TextView tvDays;
         ImageView myImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvGroceryTitle);
+            tvTitle = itemView.findViewById(R.id.tvGroceryTitle);
             myImageView = itemView.findViewById(R.id.imgGrocery);
+            tvDays = itemView.findViewById(R.id.tvExpDays);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-        }
+
+         }
     }
 
 

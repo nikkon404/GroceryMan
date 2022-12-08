@@ -1,18 +1,15 @@
 package com.nikkon.groceryman.Services;
 
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import java.util.Calendar;
 
 public class NotificationService {
     public static final String CHANNEL_ID = "grocery_channel";
@@ -68,7 +65,6 @@ public class NotificationService {
         // create alarm manager
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeMilliSec, pending);
-        Toast.makeText(context, "Scheduled ", Toast.LENGTH_LONG).show();
     }
 
 

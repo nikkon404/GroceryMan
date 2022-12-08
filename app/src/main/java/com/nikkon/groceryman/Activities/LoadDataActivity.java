@@ -73,10 +73,8 @@ public class LoadDataActivity extends AppCompatActivity {
          if(item!=null){
              Intent intent = new Intent(activity, FormActivity.class);
              intent.putExtra("item",item);
-             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-             activity.startActivity(intent);
              activity.finish();
+             activity.startActivity(intent);
          }
      }
 
