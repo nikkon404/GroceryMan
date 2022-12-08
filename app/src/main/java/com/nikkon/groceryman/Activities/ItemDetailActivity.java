@@ -42,6 +42,19 @@ public class ItemDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.tvGroceryItemDesc)).setText(fetchedItem.getDescription());
         ((TextView) findViewById(R.id.tvGroceryItemBrand)).setText(fetchedItem.getBrand());
         ((TextView) findViewById(R.id.tvGroceryItemCat)).setText(fetchedItem.getCategory());
+        ((TextView) findViewById(R.id.tvAddedIn)).setText(Converter.getReadableDate(fetchedItem.getCreatedAt()));
+
+        String expText = "";
+        int daysLeft = fetchedItem.getDaysBeforeExpiration();
+        if(daysLeft > 0){
+            expText = daysLeft + " days left - ("+ Converter.getReadableDate(fetchedItem.getExpdate())+")";
+        }else if(daysLeft == 0){
+            expText = "Expired Today";
+        }else{
+            expText = "Expired "+(-daysLeft)+" days ago";
+
+        }
+        ((TextView) findViewById(R.id.tvExpInfo)).setText(expText);
 
 
     }

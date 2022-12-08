@@ -56,6 +56,13 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             }
         });
 
+        //make the view red if the item is expired
+        if (item.getDaysBeforeExpiration() < 0) {
+
+            //light red color
+            holder.itemView.setBackgroundColor(0xFFFFE0E0);
+        }
+
 
     }
 
