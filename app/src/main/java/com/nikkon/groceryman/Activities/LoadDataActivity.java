@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,36 +53,41 @@ public class LoadDataActivity extends AppCompatActivity {
         //set the data to the text view
        ( (TextView)findViewById(R.id.testText)).setText(data);
         new UpdateTask(LoadDataActivity.this).execute(data);
+
     }
 
 }
 
  class UpdateTask extends AsyncTask<String, String,String> {
 
+    private Item item;
+
     private Activity activity;
      public UpdateTask(Activity activity) {
             this.activity=activity;
-
      }
 
-
-     //on post execute
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-
+     @Override
+     protected void onPostExecute(String s) {
+         super.onPostExecute(s);
+         if(item!=null){
+             Intent intent = new Intent(activity, FormActivity.class);
+             intent.putExtra("item",item);
+             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             activity.startActivity(intent);
+             activity.finish();
+         }
+     }
 
      protected String doInBackground(String... urls) {
 
         Log.d("TAG", "doInBackground:     "+ urls);
         String url = urls[0];
-
-        loadData2(url);
-
+        loadData(url);
         return "";
     }
-     void loadData2(String barCode) {
+     void loadData(String barCode) {
          //get request okhttp
          OkHttpClient client = new OkHttpClient();
 
@@ -100,6 +106,19 @@ public class LoadDataActivity extends AppCompatActivity {
              @Override
              public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                  ResponseBody body = response.body();
+                 int code= response.code();
+                 if(code != 200){
+                     activity.runOnUiThread(() -> {
+                         try {
+                             Dialog.show(activity, "Error", response.body().string());
+                         } catch (IOException e) {
+                             e.printStackTrace();
+                         }
+                     });
+
+                     return;
+
+                 }
                  try {
                      if (body != null) {
                          String bodyString = body.string();
@@ -107,7 +126,9 @@ public class LoadDataActivity extends AppCompatActivity {
                             GroceryResponse groceryResponse = new GroceryResponse(mapping);
                             if(groceryResponse.getCode().equals("OK") &&  groceryResponse.getItems().length>0){
                                 //goto form page
-                                Item item = groceryResponse.getItems()[0];
+                                 item = groceryResponse.getItems()[0];
+                               onPostExecute("");
+
                             }
                             else{
                                 activity.runOnUiThread(() -> Dialog.show(activity,"Error",groceryResponse.getCode()+ ": Failed to load data"));

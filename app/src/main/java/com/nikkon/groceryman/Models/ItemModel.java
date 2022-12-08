@@ -6,9 +6,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.nikkon.groceryman.Utils.Converter;
 import com.nikkon.groceryman.Utils.DBHelper;
 
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ItemModel {
@@ -42,18 +45,14 @@ public class ItemModel {
         values.put("brand", item.getBrand());
         values.put("model", item.getModel());
         values.put("category", item.getCategory());
-
-        // convert images array to string
-        String images = "";
-        for (String image : item.getImages()) {
-            images += image + ",";
-        }
-        values.put("images", images);
+        values.put("images", item.getBase64Image());
         values.put("elid", item.getElid());
 
         // datetime string of now
         String datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        values.put("createdAt", datetime);
+
+        values.put("createdAt", Calendar.getInstance().getTimeInMillis());
+        values.put("expdate", item.getExpdate().getTime());
 
         long result = db.insert("Grocery", null, values);
         db.close();
@@ -107,12 +106,11 @@ public class ItemModel {
         item.setModel(cursor.getString(cursor.getColumnIndex("model")));
         item.setCategory(cursor.getString(cursor.getColumnIndex("category")));
 
-        // convert images string to array
-        String[] images = cursor.getString(cursor.getColumnIndex("images")).split(",");
-        //convert images array to Arraylist<String>
-//        item.setImages(images);
+        item.setBase64Image(cursor.getString(cursor.getColumnIndex("images")));
         item.setElid(cursor.getString(cursor.getColumnIndex("elid")));
-        item.setCreatedAt(cursor.getString(cursor.getColumnIndex("createdAt")));
+
+        item.setCreatedAt(new Date(cursor.getLong(cursor.getColumnIndex("createdAt"))));
+        item.setExpdate(new Date(cursor.getLong(cursor.getColumnIndex("expdate"))));
 
         return item;
     }
