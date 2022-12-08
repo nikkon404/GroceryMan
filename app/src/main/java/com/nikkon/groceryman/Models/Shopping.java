@@ -1,9 +1,17 @@
 package com.nikkon.groceryman.Models;
 
-public class Todo {
+public class Shopping extends Object {
     private int id;
     private String title;
     private String createdAt;
+
+    //empty constructor
+    public Shopping() {
+    }
+
+    public Shopping( String title){
+        this.title = title;
+    }
 
     public int getId() {
         return id;

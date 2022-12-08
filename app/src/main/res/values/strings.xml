@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GroceryMan</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Shopping: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="chart">Chart</string>
@@ -18,6 +18,7 @@
     <string name="category">Category</string>
     <string name="clear">Clear</string>
     <string name="added_in">Added In</string>
+    <string name="show_shops_nearby">Show shops nearby</string>
 
 
     <string-array name="array_category">
