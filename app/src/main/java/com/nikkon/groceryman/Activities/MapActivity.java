@@ -9,7 +9,6 @@ import android.os.Bundle;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.nikkon.groceryman.Fragments.GroceryShopMapFragment;
-import com.nikkon.groceryman.Fragments.HomeFragment;
 import com.nikkon.groceryman.R;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {

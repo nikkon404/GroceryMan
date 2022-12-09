@@ -8,7 +8,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "grocery.db";
     private static final int DB_VERSION = 1;
 
-    static final String[] TABLES = {"Grocery", "Todo"};
+    static final String[] TABLES = {"Grocery", "Shopping"};
     static final String[] COLS_GROCERY = {
             "id INTEGER PRIMARY KEY AUTOINCREMENT",
             "ean TEXT NOT NULL",
