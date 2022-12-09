@@ -1,10 +1,14 @@
 package com.nikkon.groceryman.Fragments;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -68,8 +72,7 @@ public class ShoppingListFragment extends Fragment {
 
         btnShowMap = view.findViewById(R.id.btnShowMap);
         btnShowMap.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), MapActivity.class);
-            startActivity(intent);
+           askLocationPermission();
         });
 
         fabAddItem = view.findViewById(R.id.fab);
@@ -83,6 +86,35 @@ public class ShoppingListFragment extends Fragment {
 
     public void loadAllItems(){
         setupData(shoppingModel.findAllShoppings());
+    }
+
+
+    void askLocationPermission(){
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Permission needed")
+                        .setMessage("Please allow location permission")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                            }
+                        })
+                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create().show();
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        } else {
+            Intent intent = new Intent(getActivity(), MapActivity.class);
+            startActivity(intent);
+        }
     }
 
 

@@ -19,6 +19,7 @@
     <string name="clear">Clear</string>
     <string name="added_in">Added In</string>
     <string name="show_shops_nearby">Show shops nearby</string>
+    <string name="google_key">AIzaSyDGqzHYZczolpW6VkqsAA8ysZkPmIPf2t0</string>
 
 
     <string-array name="array_category">
@@ -35,5 +36,6 @@
         <item>Garnishes</item>
         <item>Others</item>
     </string-array>
+
 
 </resources>
