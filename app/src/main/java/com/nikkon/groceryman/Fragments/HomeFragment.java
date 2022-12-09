@@ -4,6 +4,7 @@ package com.nikkon.groceryman.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,20 +36,10 @@ public class HomeFragment extends Fragment {
     View view;
     ItemModel itemModel;
 
-    private static HomeFragment instance;
 
     public HomeFragment() {
         // Required empty public constructor
     }
-
-    //make fragment singleton
-    public static HomeFragment getInstance() {
-        if (instance == null) {
-            instance = new HomeFragment();
-        }
-        return instance;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,8 +52,13 @@ public class HomeFragment extends Fragment {
         initui();
         loadAllItems();
         return view;
+
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     private void initui(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -134,8 +130,12 @@ public class HomeFragment extends Fragment {
 
     //set up the RecyclerView
     void setupData(Item[] items){
-        adapter = new ItemRecyclerViewAdapter(getContext(), items);
-        recyclerView.setAdapter(adapter);
+        Context context = getContext();
+        if(context != null){
+            adapter = new ItemRecyclerViewAdapter(context, items);
+            recyclerView.setAdapter(adapter);
+        }
+
     }
 
     private void performSearch(String query) {

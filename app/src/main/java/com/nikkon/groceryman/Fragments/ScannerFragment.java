@@ -53,6 +53,7 @@ public class ScannerFragment extends Fragment {
         surfaceView = view.findViewById(R.id.surfaceView);
         //initialiseDetectorsAndSources();
         openDataLoader("041383090219");
+
         return view;
     }
 
