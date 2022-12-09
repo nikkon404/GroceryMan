@@ -77,6 +77,8 @@ public class ItemModel {
         String images = item.getBase64Image();
         values.put("images", images);
         values.put("elid", item.getElid());
+        values.put("expdate", item.getExpdate().getTime());
+
 
         long result = db.update("Grocery", values, "id = ?", new String[]{String.valueOf(item.getID())});
         db.close();
@@ -115,20 +117,20 @@ public class ItemModel {
         return item;
     }
 
-    // find item by id
-    public Item findItemById(int id) {
-        DBHelper dbhelper = new DBHelper(this.context);
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Grocery WHERE id = ?", new String[]{String.valueOf(id)});
-        Item item = null;
-        if (cursor.moveToFirst()) {
-            item = composeItem(cursor);
-        }
-        cursor.close();
-        db.close();
-
-        return item;
-    }
+//    // find item by id
+//    public Item findItemById(int id) {
+//        DBHelper dbhelper = new DBHelper(this.context);
+//        SQLiteDatabase db = dbhelper.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM Grocery WHERE id = ?", new String[]{String.valueOf(id)});
+//        Item item = null;
+//        if (cursor.moveToFirst()) {
+//            item = composeItem(cursor);
+//        }
+//        cursor.close();
+//        db.close();
+//
+//        return item;
+//    }
 
     // find all items
     public Item[] findAllItems() {

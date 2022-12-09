@@ -28,6 +28,7 @@ import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Services.NotificationService;
+import com.nikkon.groceryman.Utils.AppConst;
 import com.nikkon.groceryman.Utils.AppSnackbar;
 import com.nikkon.groceryman.Utils.Converter;
 import com.nikkon.groceryman.Utils.Dialog;
@@ -55,12 +56,15 @@ public class FormActivity extends AppCompatActivity {
     Item fetchedItem;
     View view;
 
+    Boolean isEdit = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
         fetchedItem = (Item) getIntent().getSerializableExtra("item");
+        isEdit = getIntent().getBooleanExtra("edit", false);
         initUI();
         setupValues();
 
@@ -112,34 +116,42 @@ public class FormActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> {
             String err = validate();
             if (err.isEmpty()) {
-                boolean success = new ItemModel(this).addItem(fetchedItem);
-                if(success){
-                    NotificationService.getInstance(this)
-                            .scheduleNotification(remindertime.getTimeInMillis(), fetchedItem.getTitle());
-
-                    Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
-                   this.setResult(RESULT_OK);
-                   this.finish();
+               boolean result =  isEdit? updateItem() : saveItem();
+                if(result) {
+                    MainActivity.instance.updateHomeData();
+                    finish();
                 }
-                else{
+                else {
                     Dialog.show(this, "Error", "Something went wrong");
-
                 }
-                //save to db
-                //generate notification
-            } else {
 
+            } else {
                 Dialog.show(this, "Error", err);
             }
 
         });
 
-//        imagepick.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+    }
+
+    boolean saveItem(){
+        boolean success = new ItemModel(this).addItem(fetchedItem);
+        if(success){
+            NotificationService.getInstance(this)
+                    .scheduleNotification(remindertime.getTimeInMillis(), fetchedItem.getTitle());
+
+            Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
+
+        }
+        return success;
+
+    }
+
+    boolean updateItem(){
+        boolean success = new ItemModel(this).updateItem(fetchedItem);
+        if(success){
+            Toast.makeText(this, "Item Updated!", Toast.LENGTH_SHORT).show();
+        }
+        return success;
 
     }
 
@@ -150,18 +162,33 @@ public class FormActivity extends AppCompatActivity {
             description.setText(fetchedItem.getDescription());
             brand.setText(fetchedItem.getBrand());
 
-            //checking if array is not empty
+            if (isEdit) {
+                btnSave.setText("Update");
+                    imageview.setVisibility(View.VISIBLE);
+                    imageview.setImageBitmap(Converter.decodeImage(fetchedItem.getBase64Image()));
+                    remdate.setVisibility(View.GONE);
+                    expdate.setText(fetchedItem.getExpdate().toString());
+                    //set category spinner value
 
-            if (fetchedItem.getImages().size() > 0) {
+                spncategory = fetchedItem.getCategory();
+                int spinnerPosition = ((ArrayAdapter) category.getAdapter()).getPosition(spncategory);
+                category.setSelection(spinnerPosition);
 
-                String imageUrl = fetchedItem.getImages().get(0);
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-                Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(imageUrl).getContent());
-                imageview.setImageBitmap(bitmap);
-                fetchedItem.setBase64Image(Converter.encodeImage(bitmap));
+            } else {
+                //checking if array is not empty
+                if (fetchedItem.getImages().size() > 0) {
 
+                    String imageUrl = fetchedItem.getImages().get(0);
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                    Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(imageUrl).getContent());
+                    imageview.setImageBitmap(bitmap);
+                    fetchedItem.setBase64Image(Converter.encodeImage(bitmap));
+
+                }
             }
+
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -263,7 +290,7 @@ public class FormActivity extends AppCompatActivity {
         if (fetchedItem.getExpdate() == null) {
             return "Expiry date is required";
         }
-        if (remindertime == null) {
+        if (!isEdit && remindertime == null) {
             return "Reminder date is required";
         }
 

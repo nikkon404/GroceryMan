@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -17,10 +20,16 @@ import com.nikkon.groceryman.Fragments.ScannerFragment;
 import com.nikkon.groceryman.Fragments.ShoppingListFragment;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Services.NotificationService;
+import com.nikkon.groceryman.Utils.AppConst;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+
+
+    public static MainActivity instance;
+    private HomeFragment homeFragment;
+
 
 
 
@@ -32,20 +41,58 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnItemSelectedListener(this);
+//        homeFragment =  new HomeFragment();
+        instance = this;
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+            homeFragment = (HomeFragment) getSupportFragmentManager().getFragment(savedInstanceState, "homeFragment");
+
+        }
+        else {
+            homeFragment = new HomeFragment();
+        }
         loadFragment(new HomeFragment());
+
     }
 
-    public void loadFragment(Fragment fragment) {
-        //to attach fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout, fragment).commit();
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Save the fragment's instance
+        if (homeFragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, "homeFragment", homeFragment);
+
+        }
+
     }
+
+    private void loadFragment(Fragment fragment) {
+        try {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.relativelayout, fragment);
+            ft.commitAllowingStateLoss();
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //set bottom navigation index
+    public void updateHomeData() {
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+    }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
         switch (item.getItemId()) {
             case R.id.nav_home:
-                fragment =  HomeFragment.getInstance();
+                fragment =  new HomeFragment();
                 break;
             case R.id.nav_chart:
                 fragment = new ChartFragment();
@@ -69,13 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==444)
-        {
-            loadFragment(HomeFragment.getInstance());
-            //do the things u wanted
-        }
-    }
+
+
+
 }
