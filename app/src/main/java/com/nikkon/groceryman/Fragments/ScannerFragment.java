@@ -51,9 +51,8 @@ public class ScannerFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_scanner, container, false);
         checkCameraPermission();
         surfaceView = view.findViewById(R.id.surfaceView);
-        //initialiseDetectorsAndSources();
-        openDataLoader("041383090219");
-
+        initialiseDetectorsAndSources();
+//        openDataLoader("041383090219");
         return view;
     }
 
