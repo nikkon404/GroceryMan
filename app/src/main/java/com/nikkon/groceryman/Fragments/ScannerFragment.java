@@ -1,6 +1,7 @@
 package com.nikkon.groceryman.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -38,7 +39,6 @@ public class ScannerFragment extends Fragment {
     SurfaceView surfaceView;
     View view;
 
-    //
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
@@ -51,8 +51,9 @@ public class ScannerFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_scanner, container, false);
         checkCameraPermission();
         surfaceView = view.findViewById(R.id.surfaceView);
-        initialiseDetectorsAndSources();
-//        openDataLoader("041383090219");
+         initialiseDetectorsAndSources();
+       // openDataLoader("041383090219");
+//        openDataLoader("066721002297");
         return view;
     }
 
@@ -164,16 +165,23 @@ public class ScannerFragment extends Fragment {
 
 
 
-
     }
 
-    //on activity result
+
+
+    @SuppressLint("MissingPermission")
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+    public void onResume() {
+        super.onResume();
+        try {
 
+        initialiseDetectorsAndSources();
+        cameraSource.start();
         }
-    }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
+
+    }
 }

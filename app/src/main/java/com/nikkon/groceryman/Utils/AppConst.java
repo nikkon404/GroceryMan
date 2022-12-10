@@ -6,6 +6,5 @@ public class AppConst {
     //google places url
     public static final String PLACES_API_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 
-    public static final int UPDATE_REQUEST_CODE = 777;
 
 }

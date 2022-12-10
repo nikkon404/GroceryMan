@@ -86,7 +86,13 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     }
 
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
+        // If you don't have res/menu, just create a directory named "menu" inside res
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
@@ -113,6 +119,17 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+        case R.id.info:
+            startActivity(new Intent(this, InfoActivity.class));
+            return(true);
+
+    }
+        return(super.onOptionsItemSelected(item));
     }
 
 

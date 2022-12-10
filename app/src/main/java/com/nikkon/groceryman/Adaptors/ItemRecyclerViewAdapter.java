@@ -49,9 +49,11 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     public void onBindViewHolder(ViewHolder holder, int position) {
         Item item = itemsArray[position];
         holder.tvTitle.setText(item.getTitle());
+        holder.tvBrand.setText("Brand: "+item.getBrand());
         holder.myImageView.setImageBitmap(Converter.decodeImage(item.getBase64Image()));
         //int to string
         String expdate = String.valueOf(item.getDaysBeforeExpiration());
+
         holder.tvDays.setText(expdate);
 
         //on click listener
@@ -89,13 +91,13 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             tvEdit.setText("Edit");
             tvDelete.setText("Delete");
             //set text size
-            tvEdit.setTextSize(20);
-            tvDelete.setTextSize(20);
+            tvEdit.setTextSize(16);
+            tvDelete.setTextSize(16);
             //set padding
-            tvEdit.setPadding(20, 20, 20, 20);
-            tvDelete.setPadding(20, 20, 20, 20);
+            tvEdit.setPadding(50, 5, 20, 20);
+            tvDelete.setPadding(50, 5, 20, 20);
             //set text color
-            tvEdit.setTextColor(Color.parseColor("#000000"));
+//            tvEdit.setTextColor(Color.parseColor("#000000"));
             tvDelete.setTextColor(Color.parseColor("#FF0000"));
 
             //get default pencil icon from android
@@ -104,13 +106,21 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             Drawable trash = v.getContext().getDrawable(android.R.drawable.ic_menu_delete);
             //set icon to text view
             tvEdit.setCompoundDrawablesWithIntrinsicBounds(pencil, null, null, null);
+            tvEdit.setCompoundDrawablePadding(30);
             tvDelete.setCompoundDrawablesWithIntrinsicBounds(trash, null, null, null);
+            tvDelete.setCompoundDrawablePadding(30);
+
 
 
 
 
             //add text views to linear layout
             linearLayout.addView(tvEdit);
+            //add divider
+            View divider = new View(v.getContext());
+            divider.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
+            divider.setBackgroundColor(Color.parseColor("#B3B3B3"));
+            linearLayout.addView(divider);
             linearLayout.addView(tvDelete);
             //set content view
             bottomSheetDialog.setContentView(linearLayout);
@@ -155,7 +165,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvTitle;
+        TextView tvTitle, tvBrand;
         TextView tvDays;
         ImageView myImageView;
 
@@ -164,6 +174,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             tvTitle = itemView.findViewById(R.id.tvGroceryTitle);
             myImageView = itemView.findViewById(R.id.imgGrocery);
             tvDays = itemView.findViewById(R.id.tvExpDays);
+            tvBrand = itemView.findViewById(R.id.tvBrand);
             itemView.setOnClickListener(this);
         }
 

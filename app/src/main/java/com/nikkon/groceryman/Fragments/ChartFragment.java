@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,25 +76,33 @@ public class ChartFragment extends Fragment {
             pieChart.addPieSlice(new PieModel(category, count, color));
 
             //create new linearlayout with color and category name
-            LinearLayout linearLayout = new LinearLayout(getContext());
-            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            linearLayout.setPadding(10, 10, 10, 10);
-            //create view with color
-            View view = new View(getContext());
-            view.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
-            view.setBackgroundColor(color);
+            LinearLayout innerLayout = new LinearLayout(getContext());
+            innerLayout.setOrientation(LinearLayout.HORIZONTAL);
+            innerLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            innerLayout.setPadding(10, 10, 10, 12);
+            //create vColor with color
+            View vColor = new View(getContext());
+            vColor.setLayoutParams(new LinearLayout.LayoutParams(45, 45));
+            vColor.setBackgroundColor(color);
+            vColor.setPadding(0,0,0,0);
             //create textview with category name
             TextView textView = new TextView(getContext());
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            textView.setText(category);
-            textView.setTextSize(18);
-            textView.setPadding(10, 10, 10, 10);
-            //add view and textview to linearlayout
-            linearLayout.addView(view);
-            linearLayout.addView(textView);
+            textView.setText(category + " (" + count + ")");
+            textView.setTextSize(13);
+            textView.setGravity(Gravity.CENTER_VERTICAL);
+
+            textView.setPadding(16, 0, 0, 0);
+
+
+            //add vColor and textview to linearlayout
+            innerLayout.addView(vColor);
+            innerLayout.addView(textView);
+            innerLayout.setGravity(Gravity.CENTER_VERTICAL);
             //add linearlayout to legend layout
-            legendLayout.addView(linearLayout);
+            legendLayout.addView(innerLayout);
+            //set center gravity
+            legendLayout.setGravity(Gravity.CENTER_VERTICAL);
         }
 
         pieChart.startAnimation();
