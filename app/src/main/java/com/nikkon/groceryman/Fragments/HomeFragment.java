@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +17,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 import com.nikkon.groceryman.Adaptors.ItemRecyclerViewAdapter;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
+import com.nikkon.groceryman.Utils.AppSnackBar;
 
 
 public class HomeFragment extends Fragment {
@@ -116,6 +113,8 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        //
     }
 
     void dismissKeyboard(){
@@ -134,6 +133,10 @@ public class HomeFragment extends Fragment {
         if(context != null){
             adapter = new ItemRecyclerViewAdapter(context, items);
             recyclerView.setAdapter(adapter);
+        }
+
+        if(items.length == 0){
+            AppSnackBar.showSnack(view, "No items found");
         }
 
     }

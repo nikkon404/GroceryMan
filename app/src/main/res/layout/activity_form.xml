@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/edittext_background"/>
+            android:padding="5sp"
+            android:background="@drawable/border"/>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -38,7 +39,9 @@
             android:id="@+id/txtDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
+            android:padding="5sp"
+            android:lines="3"
+            android:background="@drawable/border"
             android:layout_marginBottom="10dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -49,9 +52,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtBrand"
+            android:padding="5sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/border"
             android:layout_marginBottom="10dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -62,9 +66,10 @@
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spnCategory"
+            android:padding="5sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/border"
             android:layout_marginBottom="50dp"/>
 
        <ImageView
@@ -88,6 +93,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             style="@style/text_style"
             app:placeholderText="@string/date"/>
 
@@ -95,24 +101,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+
             android:layout_marginTop="10dp">
 
-            <TextView
-                android:id="@+id/expDate"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:text="@string/select_exp_date"
-                android:background="@drawable/edittext_background"
-                android:layout_marginRight="50dp"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:id="@+id/remDate"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_rem_date"
-                android:background="@drawable/edittext_background"
-                android:layout_marginBottom="10dp"/>
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/expiry_date"
+                    android:layout_marginBottom="8sp"
+                    />
+                <TextView
+                    android:id="@+id/expDate"
+                    android:layout_width="140dp"
+                    android:padding="5sp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:text="@string/select_date"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginBottom="10dp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8sp"
+                    android:text="@string/reminder_date"/>
+                <TextView
+                    android:id="@+id/remDate"
+                    android:layout_width="140dp"
+                    android:padding="5sp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:text="@string/select_date"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginBottom="10dp"/>
+
+            </LinearLayout>
 
 
         </LinearLayout>

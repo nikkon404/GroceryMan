@@ -9,10 +9,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -23,13 +25,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.nikkon.groceryman.Fragments.HomeFragment;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Services.NotificationService;
-import com.nikkon.groceryman.Utils.AppConst;
-import com.nikkon.groceryman.Utils.AppSnackbar;
+import com.nikkon.groceryman.Utils.AppSnackBar;
 import com.nikkon.groceryman.Utils.Converter;
 import com.nikkon.groceryman.Utils.Dialog;
 
@@ -46,10 +46,8 @@ public class FormActivity extends AppCompatActivity {
     EditText title, description, brand;
     Spinner category;
     String spncategory;
-    DatePickerDialog datepicker;
     TextView expdate, remdate, txtPickImg;
     ImageView imageview;
-    Uri uri;
     Button btnSave;
     Calendar remindertime;
 
@@ -67,8 +65,21 @@ public class FormActivity extends AppCompatActivity {
         isEdit = getIntent().getBooleanExtra("edit", false);
         initUI();
         setupValues();
+        getSupportActionBar().setTitle(isEdit? "Edit Item": "Add Item");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().  setDisplayShowHomeEnabled(true);
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     void initUI() {
@@ -80,7 +91,6 @@ public class FormActivity extends AppCompatActivity {
         expdate = findViewById(R.id.expDate);
         remdate = findViewById(R.id.remDate);
         imageview = findViewById(R.id.imageview);
-        datepicker = new DatePickerDialog(getApplicationContext());
         imageview = findViewById(R.id.imageview);
         txtPickImg = findViewById(R.id.pickImg);
         txtPickImg.setOnClickListener(v -> pickImage());
@@ -166,7 +176,7 @@ public class FormActivity extends AppCompatActivity {
                 btnSave.setText("Update");
                     imageview.setVisibility(View.VISIBLE);
                     imageview.setImageBitmap(Converter.decodeImage(fetchedItem.getBase64Image()));
-                    remdate.setVisibility(View.GONE);
+//                    remdate.setVisibility(View.GONE);
                     expdate.setText(fetchedItem.getExpdate().toString());
                     //set category spinner value
 
@@ -229,8 +239,8 @@ public class FormActivity extends AppCompatActivity {
     public void pickExpDate() {
         final Calendar currentDate = Calendar.getInstance();
         Calendar finalDate = Calendar.getInstance();
-        new DatePickerDialog(this, (datePicker, y, m, d) -> {
-            finalDate.set(y, m, d);
+        DatePickerDialog dialog =new DatePickerDialog(this, (DatePicker view, int year, int monthOfYear, int dayOfMonth) -> {
+            finalDate.set(year, monthOfYear, dayOfMonth);
             new TimePickerDialog(FormActivity.this, (timePicker, i, i1) -> {
                 finalDate.set(Calendar.HOUR_OF_DAY, i);
                 finalDate.set(Calendar.MINUTE, i1);
@@ -238,12 +248,32 @@ public class FormActivity extends AppCompatActivity {
                 finalDate.set(Calendar.MILLISECOND, 0);
                 fetchedItem.setExpdate(finalDate.getTime());
                 expdate.setText(finalDate.getTime().toString());
+
+                //also set reminder date
+                //one day before expiration date
+                Calendar reminderDate = Calendar.getInstance();
+                reminderDate.setTime(finalDate.getTime());
+                reminderDate.add(Calendar.DATE, -1);
+                setRemindertime(reminderDate);
             }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), true).show();
 
-        }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
+        }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE));
+
+//        DatePickerDialog dialog =  DatePickerDialog(this, (datePicker, y, m, d) ->
+//        {
+//
+//        }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE));
+
+        dialog.getDatePicker().setMinDate(currentDate.getTimeInMillis());
+        dialog.show();
+
     }
 
     public void pickRemDate() {
+        if (isEdit){
+            AppSnackBar.showSnack(this.view, "You can't change reminder date");
+            return;
+        }
         final Calendar currentDate = Calendar.getInstance();
         Calendar finalDate = Calendar.getInstance();
         new DatePickerDialog(this, (datePicker, y, m, d) -> {
@@ -253,12 +283,17 @@ public class FormActivity extends AppCompatActivity {
                 finalDate.set(Calendar.MINUTE, i1);
                 finalDate.set(Calendar.SECOND, 0);
                 finalDate.set(Calendar.MILLISECOND, 0);
-                remindertime = finalDate;
-                remdate.setText(finalDate.getTime().toString());
+
+                setRemindertime(finalDate);
 
             }, currentDate.get(Calendar.HOUR_OF_DAY), currentDate.get(Calendar.MINUTE), true).show();
 
         }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
+    }
+
+    void setRemindertime(Calendar time){
+        remindertime = time;
+        remdate.setText(time.getTime().toString());
     }
 
 

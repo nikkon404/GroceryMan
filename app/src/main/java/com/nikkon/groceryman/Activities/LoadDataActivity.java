@@ -98,16 +98,8 @@ public class LoadDataActivity extends AppCompatActivity {
                  ResponseBody body = response.body();
                  int code= response.code();
                  if(code != 200){
-                     activity.runOnUiThread(() -> {
-                         try {
-                             Dialog.show(activity, "Error", response.body().string());
-                         } catch (IOException e) {
-                             e.printStackTrace();
-                         }
-                     });
-
+                    showErrorAndFinish(response.message());
                      return;
-
                  }
                  try {
                      if (body != null) {
@@ -129,7 +121,7 @@ public class LoadDataActivity extends AppCompatActivity {
                         e.printStackTrace();
                         String messgae = e.getMessage();
                         Log.e("TAG", "onResponse:  "+messgae );
-                        activity.runOnUiThread(() -> Dialog.show(activity, "Error", messgae));
+                        showErrorAndFinish(messgae);
                  }
 
              }
@@ -140,6 +132,14 @@ public class LoadDataActivity extends AppCompatActivity {
 
              }
          });
+     }
+
+     void showErrorAndFinish(String message){
+         activity.runOnUiThread(() -> {
+             activity.finish();
+             Dialog.show(activity, "Error", message);
+         });
+
      }
 
 }

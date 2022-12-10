@@ -10,6 +10,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,7 +27,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.CancellationToken;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.google.android.gms.tasks.Task;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Utils.AppConst;
@@ -47,21 +51,36 @@ public class GroceryShopMapFragment extends Fragment {
     private void getLastLocation() {
 
             FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-            mFusedLocationClient.getLastLocation().addOnCompleteListener(task -> {
-                Location location = task.getResult();
-                if (location == null) {
-//                requestNewLocationData();
-                } else {
-                    map.setMyLocationEnabled(true);
-                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-                    map.addMarker(new MarkerOptions().position(latLng).title("You are here"));
+            mFusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, new CancellationToken() {
+                @Override
+                public boolean isCancellationRequested() {
+                    return false;
+                }
 
-                    //comma separated lat and long
-                    String latlong = location.getLatitude() + "," + location.getLongitude();
-                    findNearbyGroceryShops(latlong);
+                @NonNull
+                @Override
+                public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
+                    return null;
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location == null) {
+                      //  requestNewLocationData();
+                    } else {
+                        map.setMyLocationEnabled(true);
+                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+//                        map.addMarker(new MarkerOptions().position(latLng).title("You are here"));
+
+                        //comma separated lat and long
+                        String latlong = location.getLatitude() + "," + location.getLongitude();
+                        findNearbyGroceryShops(latlong);
+                    }
                 }
             });
+
     }
 
 
@@ -145,6 +164,8 @@ public class GroceryShopMapFragment extends Fragment {
             }
         });
         }
+
+
 
 
 

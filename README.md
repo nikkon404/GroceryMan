@@ -10,4 +10,3 @@ You can scan barcodes to add items to your list, and you can also add items manu
 * Jianxuan Li
 * Krupa Suhagiya
 * Smit Mehta
-* Krupa Suhagiya
