@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
         String[] categories = getContext().getResources().getStringArray(R.array.array_category);
         //add all to the beginning of the list
         String[] allCategories = new String[categories.length + 1];
-        allCategories[0] = "All";
+        allCategories[0] = "All categories";
         System.arraycopy(categories, 0, allCategories, 1, categories.length);
 
 
@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String Cat = spinner.getSelectedItem().toString();
-                if (Cat.equals("All")) {
+                if (Cat.equals("All categories")) {
                     loadAllItems();
                 } else {
                     setupData(itemModel.findItemsByCategory(Cat));
