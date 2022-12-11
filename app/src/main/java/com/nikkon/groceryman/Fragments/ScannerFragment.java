@@ -52,7 +52,7 @@ public class ScannerFragment extends Fragment {
         checkCameraPermission();
         surfaceView = view.findViewById(R.id.surfaceView);
          initialiseDetectorsAndSources();
-       // openDataLoader("041383090219");
+//        openDataLoader("041383090219");
 //        openDataLoader("066721002297");
         return view;
     }
