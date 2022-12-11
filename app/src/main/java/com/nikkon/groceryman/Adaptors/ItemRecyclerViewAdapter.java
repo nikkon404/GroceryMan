@@ -17,11 +17,13 @@ import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.nikkon.groceryman.Activities.FormActivity;
-import com.nikkon.groceryman.Activities.ItemDetailActivity;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
-import com.nikkon.groceryman.Utils.Converter;
+import com.nikkon.groceryman.Services.NotificationService;
+import com.nikkon.groceryman.Utils.Utilities;
+
+import java.util.Calendar;
 
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
 
@@ -50,7 +52,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         Item item = itemsArray[position];
         holder.tvTitle.setText(item.getTitle());
         holder.tvBrand.setText("Brand: "+item.getBrand());
-        holder.myImageView.setImageBitmap(Converter.decodeImage(item.getBase64Image()));
+        holder.myImageView.setImageBitmap(Utilities.decodeImage(item.getBase64Image()));
         //int to string
         String expdate = String.valueOf(item.getDaysBeforeExpiration());
 
@@ -60,10 +62,14 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //time after 10 seconds
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.SECOND, 5);
+                NotificationService.getInstance(v.getContext()).scheduleNotification(calendar.getTimeInMillis(), item);
                 //open details activity
-                Intent intent = new Intent(v.getContext(), ItemDetailActivity.class);
-                intent.putExtra("item", item);
-                v.getContext().startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), ItemDetailActivity.class);
+//                intent.putExtra("item", item);
+//                v.getContext().startActivity(intent);
             }
         });
 

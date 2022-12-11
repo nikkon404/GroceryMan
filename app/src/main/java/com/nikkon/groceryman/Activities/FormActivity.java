@@ -30,7 +30,7 @@ import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Services.NotificationService;
 import com.nikkon.groceryman.Utils.AppSnackBar;
-import com.nikkon.groceryman.Utils.Converter;
+import com.nikkon.groceryman.Utils.Utilities;
 import com.nikkon.groceryman.Utils.Dialog;
 
 import java.io.IOException;
@@ -144,10 +144,12 @@ public class FormActivity extends AppCompatActivity {
     }
 
     boolean saveItem(){
-        boolean success = new ItemModel(this).addItem(fetchedItem);
+        int id  = new ItemModel(this).addItem(fetchedItem);
+        boolean success = id > 0;
         if(success){
+            fetchedItem.setID(id);
             NotificationService.getInstance(this)
-                    .scheduleNotification(remindertime.getTimeInMillis(), fetchedItem.getTitle());
+                    .scheduleNotification(remindertime.getTimeInMillis(), fetchedItem);
 
             Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
 
@@ -175,7 +177,7 @@ public class FormActivity extends AppCompatActivity {
             if (isEdit) {
                 btnSave.setText("Update");
                     imageview.setVisibility(View.VISIBLE);
-                    imageview.setImageBitmap(Converter.decodeImage(fetchedItem.getBase64Image()));
+                    imageview.setImageBitmap(Utilities.decodeImage(fetchedItem.getBase64Image()));
 //                    remdate.setVisibility(View.GONE);
                     expdate.setText(fetchedItem.getExpdate().toString());
                     //set category spinner value
@@ -193,7 +195,7 @@ public class FormActivity extends AppCompatActivity {
                     StrictMode.setThreadPolicy(policy);
                     Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(imageUrl).getContent());
                     imageview.setImageBitmap(bitmap);
-                    fetchedItem.setBase64Image(Converter.encodeImage(bitmap));
+                    fetchedItem.setBase64Image(Utilities.encodeImage(bitmap));
 
                 }
             }
@@ -218,7 +220,7 @@ public class FormActivity extends AppCompatActivity {
 
             //get bitmap from imageview
             Bitmap bitmap = ((BitmapDrawable) imageview.getDrawable()).getBitmap();
-            fetchedItem.setBase64Image(Converter.encodeImage(bitmap));
+            fetchedItem.setBase64Image(Utilities.encodeImage(bitmap));
             // Use the uri to load the image
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             // Use ImagePicker.Companion.getError(result.getData()) to show an error

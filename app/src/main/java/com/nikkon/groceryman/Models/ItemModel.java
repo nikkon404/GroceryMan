@@ -6,11 +6,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.nikkon.groceryman.Utils.Converter;
 import com.nikkon.groceryman.Utils.DBHelper;
 
 import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,7 +32,7 @@ public class ItemModel {
     }
 
     // add item
-    public boolean addItem(Item item) {
+    public int addItem(Item item) {
         DBHelper dbhelper = new DBHelper(this.context);
         SQLiteDatabase db = dbhelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -56,8 +54,9 @@ public class ItemModel {
 
         long result = db.insert("Grocery", null, values);
         db.close();
+        //long to int
+        return (int) result;
 
-        return result != -1;
     }
 
     // update item
@@ -117,20 +116,20 @@ public class ItemModel {
         return item;
     }
 
-//    // find item by id
-//    public Item findItemById(int id) {
-//        DBHelper dbhelper = new DBHelper(this.context);
-//        SQLiteDatabase db = dbhelper.getReadableDatabase();
-//        Cursor cursor = db.rawQuery("SELECT * FROM Grocery WHERE id = ?", new String[]{String.valueOf(id)});
-//        Item item = null;
-//        if (cursor.moveToFirst()) {
-//            item = composeItem(cursor);
-//        }
-//        cursor.close();
-//        db.close();
-//
-//        return item;
-//    }
+    // find item by id
+    public Item findItemById(int id) {
+        DBHelper dbhelper = new DBHelper(this.context);
+        SQLiteDatabase db = dbhelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Grocery WHERE id = ?", new String[]{String.valueOf(id)});
+        Item item = null;
+        if (cursor.moveToFirst()) {
+            item = composeItem(cursor);
+        }
+        cursor.close();
+        db.close();
+
+        return item;
+    }
 
     // find all items
     public Item[] findAllItems() {

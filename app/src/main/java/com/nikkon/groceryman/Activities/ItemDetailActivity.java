@@ -2,6 +2,7 @@ package com.nikkon.groceryman.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -9,9 +10,7 @@ import android.widget.TextView;
 
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
-import com.nikkon.groceryman.Utils.Converter;
-
-import org.w3c.dom.Text;
+import com.nikkon.groceryman.Utils.Utilities;
 
 import java.util.Objects;
 
@@ -35,19 +34,19 @@ public class ItemDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);// provide compatibility to all the versions
 
         ((ImageView)findViewById(R.id.groceryImage)).setImageBitmap(
-                Converter.decodeImage(fetchedItem.getBase64Image())
+                Utilities.decodeImage(fetchedItem.getBase64Image())
         );
 
         ((TextView) findViewById(R.id.tvGroceryItemTitle)).setText(fetchedItem.getTitle());
         ((TextView) findViewById(R.id.tvGroceryItemDesc)).setText(fetchedItem.getDescription());
         ((TextView) findViewById(R.id.tvGroceryItemBrand)).setText(fetchedItem.getBrand());
         ((TextView) findViewById(R.id.tvGroceryItemCat)).setText(fetchedItem.getCategory());
-        ((TextView) findViewById(R.id.tvAddedIn)).setText(Converter.getReadableDate(fetchedItem.getCreatedAt()));
+        ((TextView) findViewById(R.id.tvAddedIn)).setText(Utilities.getReadableDate(fetchedItem.getCreatedAt()));
 
         String expText = "";
         int daysLeft = fetchedItem.getDaysBeforeExpiration();
         if(daysLeft > 0){
-            expText = daysLeft + " days left - ("+ Converter.getReadableDate(fetchedItem.getExpdate())+")";
+            expText = daysLeft + " days left - ("+ Utilities.getReadableDate(fetchedItem.getExpdate())+")";
         }else if(daysLeft == 0){
             expText = "Expired Today";
         }else{
@@ -63,6 +62,11 @@ public class ItemDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
+            //check if there is any activity in the stack
+            if(isTaskRoot()){
+                startActivity(new Intent(this,MainActivity.class));
+            }
+
             finish(); // close this activity and return to preview activity (if there is any)
         }
         return super.onOptionsItemSelected(item);

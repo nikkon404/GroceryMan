@@ -26,9 +26,13 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.nikkon.groceryman.Activities.FormActivity;
 import com.nikkon.groceryman.Activities.LoadDataActivity;
 import com.nikkon.groceryman.Activities.MainActivity;
+import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
+import com.nikkon.groceryman.Utils.Dialog;
+import com.nikkon.groceryman.Utils.Utilities;
 
 import java.io.IOException;
 
@@ -52,6 +56,15 @@ public class ScannerFragment extends Fragment {
         checkCameraPermission();
         surfaceView = view.findViewById(R.id.surfaceView);
          initialiseDetectorsAndSources();
+         view.findViewById(R.id.btnManualAdd).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(getActivity(), FormActivity.class);
+
+                 intent.putExtra("item", Item.emptyItem());
+                    startActivity(intent);
+             }
+         });
 //        openDataLoader("041383090219");
 //        openDataLoader("066721002297");
         return view;
@@ -140,6 +153,12 @@ public class ScannerFragment extends Fragment {
     }
 
     void openDataLoader(String data){
+
+        if(!Utilities.hasInternet(view.getContext())){
+            Dialog.show(view.getContext(),"No internet connection","Please check your internet connection and try again");
+            return;
+        }
+
         Intent intent = new Intent(getActivity(), LoadDataActivity.class);
         intent.putExtra("data", data);
         try {
