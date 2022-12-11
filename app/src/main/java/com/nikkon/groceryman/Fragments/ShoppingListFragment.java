@@ -29,6 +29,10 @@ import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.Shopping;
 import com.nikkon.groceryman.Models.ShoppingModel;
 import com.nikkon.groceryman.R;
+import com.nikkon.groceryman.Utils.AppSnackBar;
+import com.nikkon.groceryman.Utils.Dialog;
+import com.nikkon.groceryman.Utils.Utilities;
+
 public class ShoppingListFragment extends Fragment {
     View view;
 
@@ -72,6 +76,10 @@ public class ShoppingListFragment extends Fragment {
 
         btnShowMap = view.findViewById(R.id.btnShowMap);
         btnShowMap.setOnClickListener(v -> {
+            if(!Utilities.hasInternet(view.getContext())){
+                AppSnackBar.showSnack(view, "Please check your internet connection and try again");
+                return;
+            }
            askLocationPermission();
         });
 

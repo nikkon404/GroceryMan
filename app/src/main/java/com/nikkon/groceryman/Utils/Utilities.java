@@ -1,15 +1,19 @@
 package com.nikkon.groceryman.Utils;
 
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Converter {
+public class Utilities {
 
     //bitmap image into base64
     public static String encodeImage(Bitmap bm) {
@@ -30,5 +34,11 @@ public class Converter {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
         return sdf.format(date);
 
+    }
+
+    //check internet connection
+    public static boolean hasInternet(Context context) {
+        ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return conMan.getActiveNetworkInfo() != null;
     }
 }

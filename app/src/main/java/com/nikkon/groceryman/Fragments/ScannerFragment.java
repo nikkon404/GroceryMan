@@ -31,6 +31,8 @@ import com.nikkon.groceryman.Activities.LoadDataActivity;
 import com.nikkon.groceryman.Activities.MainActivity;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
+import com.nikkon.groceryman.Utils.Dialog;
+import com.nikkon.groceryman.Utils.Utilities;
 
 import java.io.IOException;
 
@@ -151,6 +153,12 @@ public class ScannerFragment extends Fragment {
     }
 
     void openDataLoader(String data){
+
+        if(!Utilities.hasInternet(view.getContext())){
+            Dialog.show(view.getContext(),"No internet connection","Please check your internet connection and try again");
+            return;
+        }
+
         Intent intent = new Intent(getActivity(), LoadDataActivity.class);
         intent.putExtra("data", data);
         try {
