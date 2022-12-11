@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.nikkon.groceryman.Adaptors.ItemRecyclerViewAdapter;
 import com.nikkon.groceryman.Models.Item;
@@ -57,6 +58,7 @@ public class HomeFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+    //initiate ui
     private void initui(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView = view.findViewById(R.id.rvItems);
@@ -136,11 +138,12 @@ public class HomeFragment extends Fragment {
         }
 
         if(items.length == 0){
-            AppSnackBar.showSnack(view, "No items found");
+            Toast.makeText(getContext(), "No items found", Toast.LENGTH_SHORT).show();
         }
 
     }
 
+    //search for items
     private void performSearch(String query) {
         setupData(itemModel.searchItemsByTitle(query));
 

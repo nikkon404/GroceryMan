@@ -31,7 +31,7 @@ public class ItemModel {
         this.context = context;
     }
 
-    // add item
+    // add item to database
     public int addItem(Item item) {
         DBHelper dbhelper = new DBHelper(this.context);
         SQLiteDatabase db = dbhelper.getWritableDatabase();
@@ -59,7 +59,7 @@ public class ItemModel {
 
     }
 
-    // update item
+    // update item in database
     public boolean updateItem(Item item) {
         DBHelper dbhelper = new DBHelper(this.context);
         SQLiteDatabase db = dbhelper.getWritableDatabase();
@@ -85,7 +85,7 @@ public class ItemModel {
         return result != -1;
     }
 
-    // delete item
+    // delete item from database
     public boolean deleteItem(int id) {
         DBHelper dbhelper = new DBHelper(this.context);
         SQLiteDatabase db = dbhelper.getWritableDatabase();
@@ -152,7 +152,7 @@ public class ItemModel {
     public Item[] findItemsByCategory(String category) {
         DBHelper dbhelper = new DBHelper(this.context);
         SQLiteDatabase db = dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Grocery WHERE category = ?", new String[]{category});
+        Cursor cursor = db.rawQuery("SELECT * FROM Grocery WHERE category = ? ORDER by expdate ASC", new String[]{category});
         Item[] items = new Item[cursor.getCount()];
         int i = 0;
         while (cursor.moveToNext()) {
@@ -182,20 +182,5 @@ public class ItemModel {
         return items;
     }
 
-    // search item by ean
-    public Item[] findItemByEan(String ean) {
-        DBHelper dbhelper = new DBHelper(this.context);
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Grocery WHERE ean = ?", new String[]{ean});
-        Item[] items = new Item[cursor.getCount()];
-        int i = 0;
-        while (cursor.moveToNext()) {
-            items[i] = composeItem(cursor);
-            i++;
-        }
-        cursor.close();
-        db.close();
 
-        return items;
-    }
 }

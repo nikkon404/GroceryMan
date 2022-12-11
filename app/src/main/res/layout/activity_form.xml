@@ -75,6 +75,7 @@
        <ImageView
            android:id="@+id/imageview"
            android:layout_gravity="center"
+           android:src="@android:drawable/ic_menu_gallery"
            android:layout_width="250sp"
            android:layout_height="250sp">
 
