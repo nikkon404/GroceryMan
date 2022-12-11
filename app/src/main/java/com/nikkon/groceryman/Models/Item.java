@@ -72,6 +72,20 @@ public class Item implements Serializable {
     public Item() {
     }
 
+    public static Item emptyItem() {
+        Item item = new Item();
+        item.setEan("");
+        item.setUpc("");
+        item.setTitle("");
+        item.setBrand("");
+        item.setModel("");
+        item.setCategory("");
+        item.setDescription("");
+        item.setImages(new ArrayList<String>());
+        item.setElid("");
+        return item;
+    }
+
     public String getBase64Image(){
        return base64;
     }

@@ -7,8 +7,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+
+import com.nikkon.groceryman.Models.Item;
 
 
 public class NotificationService {
@@ -57,10 +60,11 @@ public class NotificationService {
 //        NotificationService.getInstance(getApplicationContext()).scheduleNotification(calendar.getTimeInMillis(), "Milk");
 //src:      https://riptutorial.com/android/example/11495/scheduling-notifications
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void scheduleNotification(Long timeMilliSec, String groceryName) {
+    public void scheduleNotification(Long timeMilliSec, Item item) {
         Intent intent = new Intent(context, NotificationReceiver.class);
-        intent.putExtra("title", groceryName);
+        intent.putExtra("title", item.getTitle());
         intent.putExtra("desc", "Grocery is about to expire!!");
+        intent.putExtra("id", item.getID());
         PendingIntent pending = PendingIntent.getBroadcast(context, NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         // create alarm manager
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

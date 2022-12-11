@@ -144,10 +144,12 @@ public class FormActivity extends AppCompatActivity {
     }
 
     boolean saveItem(){
-        boolean success = new ItemModel(this).addItem(fetchedItem);
+        int id  = new ItemModel(this).addItem(fetchedItem);
+        boolean success = id > 0;
         if(success){
+            fetchedItem.setID(id);
             NotificationService.getInstance(this)
-                    .scheduleNotification(remindertime.getTimeInMillis(), fetchedItem.getTitle());
+                    .scheduleNotification(remindertime.getTimeInMillis(), fetchedItem);
 
             Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
 

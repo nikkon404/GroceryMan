@@ -21,7 +21,10 @@ import com.nikkon.groceryman.Activities.ItemDetailActivity;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
+import com.nikkon.groceryman.Services.NotificationService;
 import com.nikkon.groceryman.Utils.Converter;
+
+import java.util.Calendar;
 
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
 
@@ -60,10 +63,14 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //time after 10 seconds
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.SECOND, 5);
+                NotificationService.getInstance(v.getContext()).scheduleNotification(calendar.getTimeInMillis(), item);
                 //open details activity
-                Intent intent = new Intent(v.getContext(), ItemDetailActivity.class);
-                intent.putExtra("item", item);
-                v.getContext().startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), ItemDetailActivity.class);
+//                intent.putExtra("item", item);
+//                v.getContext().startActivity(intent);
             }
         });
 

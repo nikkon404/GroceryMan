@@ -32,6 +32,7 @@
     <string name="reminder_date">Reminder Date</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="search_item">Search Item</string>
+    <string name="enter_manually">Enter Manually</string>
 
 
     <string-array name="array_category">
