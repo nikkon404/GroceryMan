@@ -82,6 +82,7 @@ public class FormActivity extends AppCompatActivity {
 
 
 
+    //initializing UI elements
     void initUI() {
         view = findViewById(android.R.id.content);
         title = findViewById(R.id.txtTitle);
@@ -178,7 +179,6 @@ public class FormActivity extends AppCompatActivity {
                 btnSave.setText("Update");
                     imageview.setVisibility(View.VISIBLE);
                     imageview.setImageBitmap(Utilities.decodeImage(fetchedItem.getBase64Image()));
-//                    remdate.setVisibility(View.GONE);
                     expdate.setText(fetchedItem.getExpdate().toString());
                     //set category spinner value
 
@@ -210,10 +210,14 @@ public class FormActivity extends AppCompatActivity {
 
     }
 
+    //callback method for picking image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+        if(data==null){
+            return;
+        }
             Uri uri = data.getData();
 
             imageview.setImageURI(uri);
@@ -238,6 +242,8 @@ public class FormActivity extends AppCompatActivity {
 
     }
 
+
+    //handler for expiration date picker
     public void pickExpDate() {
         final Calendar currentDate = Calendar.getInstance();
         Calendar finalDate = Calendar.getInstance();
@@ -271,6 +277,7 @@ public class FormActivity extends AppCompatActivity {
 
     }
 
+    //handler for reminder date picker
     public void pickRemDate() {
         if (isEdit){
             AppSnackBar.showSnack(this.view, "You can't change reminder date");
@@ -300,7 +307,6 @@ public class FormActivity extends AppCompatActivity {
 
 
     String validate() {
-
         //set values to item object
         fetchedItem.setTitle(title.getText().toString());
         fetchedItem.setDescription(description.getText().toString());

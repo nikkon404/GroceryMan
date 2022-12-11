@@ -31,6 +31,7 @@ import com.nikkon.groceryman.Activities.LoadDataActivity;
 import com.nikkon.groceryman.Activities.MainActivity;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
+import com.nikkon.groceryman.Utils.AppSnackBar;
 import com.nikkon.groceryman.Utils.Dialog;
 import com.nikkon.groceryman.Utils.Utilities;
 
@@ -65,6 +66,7 @@ public class ScannerFragment extends Fragment {
                     startActivity(intent);
              }
          });
+         initialiseDetectorsAndSources();
 //        openDataLoader("041383090219");
 //        openDataLoader("066721002297");
         return view;
@@ -85,6 +87,8 @@ public class ScannerFragment extends Fragment {
 
     }
 
+
+    //initiate barcode detector
     private void initialiseDetectorsAndSources() {
 
         Toast.makeText(view.getContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
@@ -134,13 +138,14 @@ public class ScannerFragment extends Fragment {
                 Toast.makeText(view.getContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
             }
 
+            //called when barcode is detected
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                    String  receivedData = barcodes.valueAt(0).displayValue;
                    if(receivedData.isEmpty()){
-                       Toast.makeText(view.getContext(), "No data received", Toast.LENGTH_SHORT).show();
+                       AppSnackBar.showSnack(view,"No data received");
                    }
                    else{
                      openDataLoader(receivedData);
@@ -152,6 +157,8 @@ public class ScannerFragment extends Fragment {
         });
     }
 
+
+    //open data loader activity
     void openDataLoader(String data){
 
         if(!Utilities.hasInternet(view.getContext())){

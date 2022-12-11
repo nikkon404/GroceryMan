@@ -44,6 +44,7 @@ public class LoadDataActivity extends AppCompatActivity {
         String data = getIntent().getStringExtra("data");
         //set the data to the text view
        ( (TextView)findViewById(R.id.testText)).setText(data);
+        //call the api
         new UpdateTask(LoadDataActivity.this).execute(data);
 
     }
@@ -62,6 +63,7 @@ public class LoadDataActivity extends AppCompatActivity {
      @Override
      protected void onPostExecute(String s) {
          super.onPostExecute(s);
+         //start form activity if the item is not null
          if(item!=null){
              Intent intent = new Intent(activity, FormActivity.class);
              intent.putExtra("item",item);
@@ -77,6 +79,8 @@ public class LoadDataActivity extends AppCompatActivity {
         loadData(url);
         return "";
     }
+
+    //load the data from the api
      void loadData(String barCode) {
          //get request okhttp
          OkHttpClient client = new OkHttpClient();

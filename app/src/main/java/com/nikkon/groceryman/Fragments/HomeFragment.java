@@ -57,6 +57,7 @@ public class HomeFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+    //initiate ui
     private void initui(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView = view.findViewById(R.id.rvItems);
@@ -141,6 +142,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    //search for items
     private void performSearch(String query) {
         setupData(itemModel.searchItemsByTitle(query));
 
