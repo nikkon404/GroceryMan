@@ -59,13 +59,15 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
         //on click listener
         holder.itemView.setOnClickListener(v -> {
-            //time after 10 seconds
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.SECOND, 5);
+
             //open details activity
             Intent intent = new Intent(v.getContext(), ItemDetailActivity.class);
             intent.putExtra("item", item);
-            v.getContext().startActivity(intent);
+            try {
+                v.getContext().startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         //make the view red if the item is expired
