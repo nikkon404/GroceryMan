@@ -1,3 +1,54 @@
 <resources>
     <string name="app_name">GroceryMan</string>
+    <!-- Shopping: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="chart">Chart</string>
+    <string name="shopping_list">Shopping List</string>
+    <string name="scan">Scan</string>
+    <string name="title">Title</string>
+    <string name="spinner">Category</string>
+    <string name="brand">Brand</string>
+    <string name="decsription">Description</string>
+    <string name="select_date">⏰ Select Date</string>
+    <string name="date">Set the Date</string>
+    <string name="image">🖼️ Pick Image</string>
+    <string name="save">Save</string>
+    <string name="category">Category</string>
+    <string name="clear">Clear</string>
+    <string name="added_in">Added In</string>
+    <string name="show_shops_nearby">Show shops nearby</string>
+    <string name="google_key">AIzaSyDGqzHYZczolpW6VkqsAA8ysZkPmIPf2t0</string>
+    <string name="legend">Legend:</string>
+    <string name="info">Info</string>
+    <string name="information">Information</string>
+    <string name="app_desc">This app keeps tracks of grocery items and keeps you up to date about expirations and more.</string>
+    <string name="group_members">Group Members</string>
+    <string name="aayush_subedi">Aayush Subedi</string>
+    <string name="jianxuan_li">Jianxuan Li</string>
+    <string name="krupa_suhagiya">Krupa Suhagiya</string>
+    <string name="smit_mehta">Smit Mehta</string>
+    <string name="days">days</string>
+    <string name="reminder_date">Reminder Date</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="search_item">Search Item</string>
+    <string name="enter_manually">Enter Manually</string>
+
+
+    <string-array name="array_category">
+        <item>Vegetables</item>
+        <item>Fruits</item>
+        <item>Meat</item>
+        <item>Dairy</item>
+        <item>Grains</item>
+        <item>Legumes</item>
+        <item>Baked Goods</item>
+        <item>Seafood</item>
+        <item>Nuts and seeds</item>
+        <item>Herbs and Spices</item>
+        <item>Garnishes</item>
+        <item>Others</item>
+    </string-array>
+
+
 </resources>
