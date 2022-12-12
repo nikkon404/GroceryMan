@@ -143,7 +143,7 @@ public class ItemModel {
             i++;
         }
         cursor.close();
-       // db.close();
+        db.close();
 
         return items;
     }

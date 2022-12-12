@@ -234,9 +234,9 @@ public class FormActivity extends AppCompatActivity {
     //image picker
     public void pickImage() {
         ImagePicker.with(this)
-                .crop()                    //Crop image(Optional), Check Customization for more option
-                .compress(1024)            //Final image size will be less than 1 MB(Optional)
-                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                .crop()
+                .compress(512)
+                .maxResultSize(720  , 720   )
                 .start();
 
 
@@ -267,10 +267,6 @@ public class FormActivity extends AppCompatActivity {
 
         }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE));
 
-//        DatePickerDialog dialog =  DatePickerDialog(this, (datePicker, y, m, d) ->
-//        {
-//
-//        }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE));
 
         dialog.getDatePicker().setMinDate(currentDate.getTimeInMillis());
         dialog.show();

@@ -1,7 +1,6 @@
 package com.nikkon.groceryman.Fragments;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -31,9 +30,6 @@ import com.nikkon.groceryman.Activities.LoadDataActivity;
 import com.nikkon.groceryman.Activities.MainActivity;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
-import com.nikkon.groceryman.Utils.AppSnackBar;
-import com.nikkon.groceryman.Utils.Dialog;
-import com.nikkon.groceryman.Utils.Utilities;
 
 import java.io.IOException;
 
@@ -44,6 +40,7 @@ public class ScannerFragment extends Fragment {
     SurfaceView surfaceView;
     View view;
 
+    //
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
@@ -56,8 +53,7 @@ public class ScannerFragment extends Fragment {
         view= inflater.inflate(R.layout.fragment_scanner, container, false);
         checkCameraPermission();
         surfaceView = view.findViewById(R.id.surfaceView);
-         initialiseDetectorsAndSources();
-         view.findViewById(R.id.btnManualAdd).setOnClickListener(new View.OnClickListener() {
+                 view.findViewById(R.id.btnManualAdd).setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  Intent intent = new Intent(getActivity(), FormActivity.class);
@@ -66,9 +62,8 @@ public class ScannerFragment extends Fragment {
                     startActivity(intent);
              }
          });
-         initialiseDetectorsAndSources();
+        initialiseDetectorsAndSources();
 //        openDataLoader("041383090219");
-//        openDataLoader("066721002297");
         return view;
     }
 
@@ -87,8 +82,6 @@ public class ScannerFragment extends Fragment {
 
     }
 
-
-    //initiate barcode detector
     private void initialiseDetectorsAndSources() {
 
         Toast.makeText(view.getContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
@@ -138,34 +131,25 @@ public class ScannerFragment extends Fragment {
                 Toast.makeText(view.getContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
             }
 
-            //called when barcode is detected
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
-                   String  receivedData = barcodes.valueAt(0).displayValue;
-                   if(receivedData.isEmpty()){
-                       AppSnackBar.showSnack(view,"No data received");
-                   }
-                   else{
-                     openDataLoader(receivedData);
+                    String  receivedData = barcodes.valueAt(0).displayValue;
+                    if(receivedData.isEmpty()){
+                        Toast.makeText(view.getContext(), "No data received", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        openDataLoader(receivedData);
 
-                   }
+                    }
 
                 }
             }
         });
     }
 
-
-    //open data loader activity
     void openDataLoader(String data){
-
-        if(!Utilities.hasInternet(view.getContext())){
-            Dialog.show(view.getContext(),"No internet connection","Please check your internet connection and try again");
-            return;
-        }
-
         Intent intent = new Intent(getActivity(), LoadDataActivity.class);
         intent.putExtra("data", data);
         try {
@@ -191,23 +175,9 @@ public class ScannerFragment extends Fragment {
 
 
 
-    }
-
-
-
-    @SuppressLint("MissingPermission")
-    @Override
-    public void onResume() {
-        super.onResume();
-        try {
-
-        initialiseDetectorsAndSources();
-        cameraSource.start();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
 
     }
+
+
+
 }
