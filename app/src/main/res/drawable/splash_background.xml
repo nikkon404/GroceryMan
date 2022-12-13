@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/white"/>
+
+    <item>
+        <bitmap
+            android:layout_width="900sp"
+            android:layout_height="900sp"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/app_icon"
+        />
+    </item>
+
+</layer-list>
