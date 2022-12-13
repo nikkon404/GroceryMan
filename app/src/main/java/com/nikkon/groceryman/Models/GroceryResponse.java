@@ -10,16 +10,10 @@ public class GroceryResponse {
     private Item[] items;
 
     public String getCode() { return code; }
-    public void setCode(String value) { this.code = value; }
 
-    public long getTotal() { return total; }
-    public void setTotal(long value) { this.total = value; }
 
-    public long getOffset() { return offset; }
-    public void setOffset(long value) { this.offset = value; }
 
     public Item[] getItems() { return items; }
-    public void setItems(Item[] value) { this.items = value; }
 
     //GroceryResponse from hashmap
     public GroceryResponse(HashMap<String, Object> map) {
@@ -38,6 +32,5 @@ public class GroceryResponse {
 
     }
 }
-// Item.java
 
 

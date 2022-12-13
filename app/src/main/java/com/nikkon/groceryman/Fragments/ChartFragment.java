@@ -1,5 +1,6 @@
 package com.nikkon.groceryman.Fragments;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -46,11 +47,15 @@ public class ChartFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private void initChart() {
         pieChart = view.findViewById(R.id.piechart);
         LinearLayout legendLayout = view.findViewById(R.id.legendLayout);
         ItemModel itemModel = new ItemModel(getContext());
         Item[] items = itemModel.findAllItems();
+
+        TextView tv = view.findViewById(R.id.txtLegend);
+        tv.setText("Legend: (Total Items: " + items.length + ")");
 
         //make a list of items by category
         List<String> categories = new ArrayList<>();
