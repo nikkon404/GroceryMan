@@ -23,16 +23,14 @@ import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Utils.Utilities;
 
-import java.util.Calendar;
-
-public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
+public class GroceryItemRecyclerViewAdapter extends RecyclerView.Adapter<GroceryItemRecyclerViewAdapter.ViewHolder> {
 
     private Item[] itemsArray;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public ItemRecyclerViewAdapter(Context context, Item[] data) {
+    public GroceryItemRecyclerViewAdapter(Context context, Item[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.itemsArray = data;
     }

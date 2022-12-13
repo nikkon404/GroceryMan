@@ -1,7 +1,6 @@
 package com.nikkon.groceryman.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -19,10 +18,6 @@ import com.nikkon.groceryman.Fragments.HomeFragment;
 import com.nikkon.groceryman.Fragments.ScannerFragment;
 import com.nikkon.groceryman.Fragments.ShoppingListFragment;
 import com.nikkon.groceryman.R;
-import com.nikkon.groceryman.Services.NotificationService;
-import com.nikkon.groceryman.Utils.AppConst;
-
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 

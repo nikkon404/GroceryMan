@@ -23,14 +23,11 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nikkon.groceryman.Activities.MapActivity;
-import com.nikkon.groceryman.Adaptors.ItemRecyclerViewAdapter;
 import com.nikkon.groceryman.Adaptors.ShoppingRecyclerViewAdapter;
-import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.Shopping;
 import com.nikkon.groceryman.Models.ShoppingModel;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Utils.AppSnackBar;
-import com.nikkon.groceryman.Utils.Dialog;
 import com.nikkon.groceryman.Utils.Utilities;
 
 public class ShoppingListFragment extends Fragment {
