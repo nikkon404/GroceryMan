@@ -39,13 +39,13 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.FormActivity"
+            android:name=".Activities.GroceryInputFormActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.LoadDataActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.SplashActivity"
+            android:name=".Activities.SplashScreenActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>

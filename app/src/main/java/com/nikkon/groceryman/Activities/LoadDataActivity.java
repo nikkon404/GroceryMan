@@ -65,7 +65,7 @@ public class LoadDataActivity extends AppCompatActivity {
          super.onPostExecute(s);
          //start form activity if the item is not null
          if(item!=null){
-             Intent intent = new Intent(activity, FormActivity.class);
+             Intent intent = new Intent(activity, GroceryInputFormActivity.class);
              intent.putExtra("item",item);
              activity.finish();
              activity.startActivity(intent);
