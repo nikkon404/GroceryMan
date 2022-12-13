@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -18,16 +17,14 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
-import com.nikkon.groceryman.Activities.FormActivity;
+import com.nikkon.groceryman.Activities.GroceryInputFormActivity;
 import com.nikkon.groceryman.Activities.LoadDataActivity;
-import com.nikkon.groceryman.Activities.MainActivity;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Utils.AppSnackBar;
@@ -58,7 +55,7 @@ public class ScannerFragment extends Fragment {
                  view.findViewById(R.id.btnManualAdd).setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent intent = new Intent(getActivity(), FormActivity.class);
+                 Intent intent = new Intent(getActivity(), GroceryInputFormActivity.class);
 
                  intent.putExtra("item", Item.emptyItem());
                     startActivity(intent);

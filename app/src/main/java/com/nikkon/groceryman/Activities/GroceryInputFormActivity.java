@@ -40,9 +40,9 @@ import java.net.URL;
 import java.util.Calendar;
 
 
-public class FormActivity extends AppCompatActivity {
+public class GroceryInputFormActivity extends AppCompatActivity {
 
-    ////Creating UI element Instances
+    //Creating UI element Instances
     EditText title, description, brand;
     Spinner category;
     String spncategory;
@@ -50,7 +50,6 @@ public class FormActivity extends AppCompatActivity {
     ImageView imageview;
     Button btnSave;
     Calendar remindertime;
-
     Item fetchedItem;
     View view;
 
@@ -249,7 +248,7 @@ public class FormActivity extends AppCompatActivity {
         Calendar finalDate = Calendar.getInstance();
         DatePickerDialog dialog =new DatePickerDialog(this, (DatePicker view, int year, int monthOfYear, int dayOfMonth) -> {
             finalDate.set(year, monthOfYear, dayOfMonth);
-            new TimePickerDialog(FormActivity.this, (timePicker, i, i1) -> {
+            new TimePickerDialog(GroceryInputFormActivity.this, (timePicker, i, i1) -> {
                 finalDate.set(Calendar.HOUR_OF_DAY, i);
                 finalDate.set(Calendar.MINUTE, i1);
                 finalDate.set(Calendar.SECOND, 0);
@@ -283,7 +282,7 @@ public class FormActivity extends AppCompatActivity {
         Calendar finalDate = Calendar.getInstance();
         new DatePickerDialog(this, (datePicker, y, m, d) -> {
             finalDate.set(y, m, d);
-            new TimePickerDialog(FormActivity.this, (timePicker, i, i1) -> {
+            new TimePickerDialog(GroceryInputFormActivity.this, (timePicker, i, i1) -> {
                 finalDate.set(Calendar.HOUR_OF_DAY, i);
                 finalDate.set(Calendar.MINUTE, i1);
                 finalDate.set(Calendar.SECOND, 0);
