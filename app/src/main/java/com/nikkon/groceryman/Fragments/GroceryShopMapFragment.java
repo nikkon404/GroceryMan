@@ -2,15 +2,10 @@ package com.nikkon.groceryman.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +17,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.CancellationToken;
@@ -32,7 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.google.android.gms.tasks.Task;
 import com.nikkon.groceryman.R;
-import com.nikkon.groceryman.Utils.AppConst;
+import com.nikkon.groceryman.Utils.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -108,7 +101,7 @@ public class GroceryShopMapFragment extends Fragment {
     void findNearbyGroceryShops(String latLong) {
         OkHttpClient client = new OkHttpClient();
         String params = "location=" + latLong + "&radius=5000&keyword=grocery&key=" + getString(R.string.google_key);
-        String url = AppConst.PLACES_API_URL + params;
+        String url = Constants.PLACES_API_URL + params;
 
         //make a request to the url
         Request request = new Request.Builder()

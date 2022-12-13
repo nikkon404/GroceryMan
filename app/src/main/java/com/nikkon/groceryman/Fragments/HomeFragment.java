@@ -21,15 +21,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.nikkon.groceryman.Adaptors.ItemRecyclerViewAdapter;
+import com.nikkon.groceryman.Adaptors.GroceryItemRecyclerViewAdapter;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
-import com.nikkon.groceryman.Utils.AppSnackBar;
 
 
 public class HomeFragment extends Fragment {
-    ItemRecyclerViewAdapter adapter;
+    GroceryItemRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     View view;
     ItemModel itemModel;
@@ -133,7 +132,7 @@ public class HomeFragment extends Fragment {
     void setupData(Item[] items){
         Context context = getContext();
         if(context != null){
-            adapter = new ItemRecyclerViewAdapter(context, items);
+            adapter = new GroceryItemRecyclerViewAdapter(context, items);
             recyclerView.setAdapter(adapter);
         }
 
