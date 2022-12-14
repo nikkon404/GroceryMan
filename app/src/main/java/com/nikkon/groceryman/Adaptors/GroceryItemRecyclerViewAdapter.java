@@ -16,23 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.common.util.ArrayUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
-import com.nikkon.groceryman.Activities.FormActivity;
+import com.nikkon.groceryman.Activities.GroceryInputFormActivity;
 import com.nikkon.groceryman.Activities.ItemDetailActivity;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.Models.ItemModel;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Utils.Utilities;
 
-import java.util.Calendar;
-
-public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
+public class GroceryItemRecyclerViewAdapter extends RecyclerView.Adapter<GroceryItemRecyclerViewAdapter.ViewHolder> {
 
     private Item[] itemsArray;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public ItemRecyclerViewAdapter(Context context, Item[] data) {
+    public GroceryItemRecyclerViewAdapter(Context context, Item[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.itemsArray = data;
     }
@@ -135,7 +133,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             //on click listener for edit
             tvEdit.setOnClickListener(v1 -> {
                 //open details activity
-                Intent intent = new Intent(v.getContext(), FormActivity.class);
+                Intent intent = new Intent(v.getContext(), GroceryInputFormActivity.class);
                 intent.putExtra("item", item);
                 intent.putExtra("edit", true);
                 v.getContext().startActivity(intent);

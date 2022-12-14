@@ -22,7 +22,7 @@ import com.nikkon.groceryman.Models.GroceryResponse;
 import com.nikkon.groceryman.Models.Item;
 import com.nikkon.groceryman.R;
 import com.nikkon.groceryman.Utils.Dialog;
-import com.nikkon.groceryman.Utils.AppConst;
+import com.nikkon.groceryman.Utils.Constants;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -65,7 +65,7 @@ public class LoadDataActivity extends AppCompatActivity {
          super.onPostExecute(s);
          //start form activity if the item is not null
          if(item!=null){
-             Intent intent = new Intent(activity, FormActivity.class);
+             Intent intent = new Intent(activity, GroceryInputFormActivity.class);
              intent.putExtra("item",item);
              activity.finish();
              activity.startActivity(intent);
@@ -85,7 +85,7 @@ public class LoadDataActivity extends AppCompatActivity {
          //get request okhttp
          OkHttpClient client = new OkHttpClient();
 
-         String url = AppConst.API_URL + barCode;
+         String url = Constants.API_URL + barCode;
          Request request = new Request.Builder()
                  .url(url)
                  .build();
